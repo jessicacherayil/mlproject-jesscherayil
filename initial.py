@@ -35,12 +35,15 @@ def eachPageText(filename):
     sortedNums = sorted(pageDict.keys())
 
     for page_num in range(len(sortedNums)-1):
+        print page_num
         start = textList.index('<' +str(sortedNums[page_num]) + '>')
-        if page_num != len(sortedNums-1):
+        if page_num != 175:
             end = textList.index('<' + str(sortedNums[page_num + 1]) + '>')
         else:
             end = len(textList)-1
         pageDict[sortedNums[page_num]] = textList[start+1:end]
+        #print start,end
+
 
     return pageDict
         
@@ -60,15 +63,23 @@ def characterFreq(pageDict, characters):
         inner = {}
         for character in joinedChars:
             noSpacesText = ''.join(pageDict[page]).lower()
-            print character
+            
             if character in noSpacesText:
                 readableName = characters[joinedChars.index(character)]
                 inner[readableName] = noSpacesText.count(character)
                 
         freqDict[page] = inner
-                
+    #print freqDict[253]  
     return freqDict
     
+def printCharFreq(freqDict):
+    for page_num in freqDict.keys():
+        print "PAGE " + str(page_num) + ":"
+
+        for char, freq in freqDict[page_num].iteritems():
+            print str(char) + " appears " + str(freq) + " times"
+        print '\n'
+            
     
     
 characters = ['Dauphine', 'MarieStuart', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
@@ -76,7 +87,7 @@ characters = ['Dauphine', 'MarieStuart', 'reine d\'Ecosse', 'Mademoiselle de Cha
 'Diane de Poitiers', 'Marguerite de France', 'Le Roi', 'Henri Second', 'Duc de Nemours', 'La Reine', 'Catherine de Medicis',
 'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'premier valet de chambre', 'Chastelart', 
 'Comte de Montgomery', 'Monsieur de Montmorency', 'Chirurgien', 'Connetable de Montmorency', 'Monsieur de Guise',
-'Monsieur de Ferrare', 'Espagnols', 'Gentilhomme de Monsieur de Cleves', 'ecuyer ami du gentilhomme',
+'Monsieur de Ferrare', 'Espagnols', 'Gentilhomme de Monsieur de Cleves', 'ecuyer ',
 'homme du magasin de soie']
 
 #characters2 = ['ladauphine', 'mariestuart', 'reined\'ecosse', 'mademoiselledechartres', 'princessedeclèves',
@@ -88,6 +99,11 @@ characters = ['Dauphine', 'MarieStuart', 'reine d\'Ecosse', 'Mademoiselle de Cha
 #'hommedumagasindesoie']
 
 pageDict = eachPageText('novel.txt')
-print characterFreq(pageDict, characters)
-    
-	
+d = characterFreq(pageDict, characters)
+#printCharFreq(d)
+
+#print dictionary nicely
+#monsieur/madame stuff
+#visualization stuff
+#matplotlib plugin for d3.js
+
