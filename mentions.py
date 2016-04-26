@@ -36,14 +36,16 @@ def eachPageText(filename):
     
     sortedNums = sorted(pageDict.keys())
 
-    for page_num in range(len(sortedNums)-1):
+    for page_num in range(len(sortedNums)):
         start = textList.index('<' +str(sortedNums[page_num]) + '>')
-        if page_num != 175:
+        if page_num != 176:
             end = textList.index('<' + str(sortedNums[page_num + 1]) + '>')
         else:
-            end = len(textList)-1
+            end = len(textList)-24
+        
+        print 'page_num',sortedNums[page_num]
         pageDict[sortedNums[page_num]] = textList[start+1:end]
-        #print start,end
+    #print 'page 252', pageDict[252]
 
     return pageDict
         
@@ -87,13 +89,14 @@ characters = ['Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Prince
 'Diane de Poitiers', 'Marguerite de France', 'Roi', 'Henri Second', 'de Nemours', 'La Reine', 'Catherine de Medicis',
 'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'premier valet de chambre', 'Chatelart', 
 'Comte de Montgomery', 'Monsieur de Montmorency', 'Chirurgien', 'Connetable de Montmorency', 'Monsieur de Guise',
-'Monsieur de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer ',
+'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer ',
 'homme du magasin de soie']
 
 #homme du magasin de soie is difficult -- maybe check if page is 235 AND word 'homme' is there
 
 
 pageDict = eachPageText('novel.txt')
+print pageDict
 d = characterFreq(pageDict, characters)
 print d
 #printCharFreq(d)
