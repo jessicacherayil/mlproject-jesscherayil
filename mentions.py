@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+'''Author: Jess Cherayil'''
+
 import re
 import codecs
 import unicodedata
@@ -35,7 +37,6 @@ def eachPageText(filename):
     sortedNums = sorted(pageDict.keys())
 
     for page_num in range(len(sortedNums)-1):
-        print page_num
         start = textList.index('<' +str(sortedNums[page_num]) + '>')
         if page_num != 175:
             end = textList.index('<' + str(sortedNums[page_num + 1]) + '>')
@@ -43,7 +44,6 @@ def eachPageText(filename):
             end = len(textList)-1
         pageDict[sortedNums[page_num]] = textList[start+1:end]
         #print start,end
-
 
     return pageDict
         
@@ -82,24 +82,20 @@ def printCharFreq(freqDict):
             
     
     
-characters = ['Dauphine', 'MarieStuart', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
+characters = ['Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
 'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Duchesse de Valentinois',
-'Diane de Poitiers', 'Marguerite de France', 'Le Roi', 'Henri Second', 'Duc de Nemours', 'La Reine', 'Catherine de Medicis',
-'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'premier valet de chambre', 'Chastelart', 
+'Diane de Poitiers', 'Marguerite de France', 'Roi', 'Henri Second', 'de Nemours', 'La Reine', 'Catherine de Medicis',
+'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'premier valet de chambre', 'Chatelart', 
 'Comte de Montgomery', 'Monsieur de Montmorency', 'Chirurgien', 'Connetable de Montmorency', 'Monsieur de Guise',
-'Monsieur de Ferrare', 'Espagnols', 'Gentilhomme de Monsieur de Cleves', 'ecuyer ',
+'Monsieur de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer ',
 'homme du magasin de soie']
 
-#characters2 = ['ladauphine', 'mariestuart', 'reined\'ecosse', 'mademoiselledechartres', 'princessedeclèves',
-#'monsieurdeclèves', 'leprincedeclèves', 'madamedechartres', 'vidamedechartres', 'lacour', 'laduchessedevalentinois',
-#'dianedepoitiers', 'margueritedefrance', 'leroi', 'henrisecond', 'ducdenemours', 'lareine', 'catherinedemédicis',
-#'lechevalierdeguise', 'cardinaldelorraine', 'sancerre', 'premiervaletdechambre', 'chastelart', 
-#'lecomtedemontgomery', 'monsieurdemontmorency', 'leschirurgiens', 'connétabledemontmorency', 'monsieurdeguise',
-#'monsieurdeferrare', 'lesespagnols', 'legentilhommedemonsieurdeclèves', 'unécuyeramidugentilhomme',
-#'hommedumagasindesoie']
+#homme du magasin de soie is difficult -- maybe check if page is 235 AND word 'homme' is there
+
 
 pageDict = eachPageText('novel.txt')
 d = characterFreq(pageDict, characters)
+print d
 #printCharFreq(d)
 
 #print dictionary nicely

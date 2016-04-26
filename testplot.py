@@ -2,7 +2,7 @@ import numpy as np
 import mpld3
 import matplotlib.pyplot as plt
 
-from mpld3.display import display_d3
+from mpld3 import display_d3
 
 fig, ax = plt.subplots()
 np.random.seed(0)
