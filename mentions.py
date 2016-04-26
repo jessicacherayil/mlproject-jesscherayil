@@ -43,11 +43,36 @@ def eachPageText(filename):
         else:
             end = len(textList)-24
         
-        print 'page_num',sortedNums[page_num]
+        
         pageDict[sortedNums[page_num]] = textList[start+1:end]
-    #print 'page 252', pageDict[252]
 
+ 
     return pageDict
+    
+def consolidate(charFreq,page_num):
+    '''Given an inner dictionary mapping each character
+    to its frequency on a page, iterate to accumulate counts
+    among characters with several nicknames'''
+    
+    if page_num == 235: 
+        pass
+        #word 'homme' is there
+    
+    if 'Dauphine' in charFreq and 'reine d\'Ecosse' in charFreq:
+        charFreq['Dauphine'] += charFreq['reine d\'Ecosse']
+        del charFreq['reine d\'Ecosse']
+    if 'Mademoiselle de Chartres' in charFreq and 'Princesse' in charFreq:
+        charFreq['Princesse'] += charFreq['Mademoiselle de Chartres']
+        del charFreq['Mademoiselle de Chartres']
+    if 'reine d\'Ecosse' in charFreq:
+        del charFreq['reine d\'Ecosse']
+    if 'Mademoiselle de Chartres' in charFreq:
+        del charFreq['Mademoiselle de Chartres']
+    if 'La Reine' in charFreq:
+        charFreq['Catherine de Medicis'] = charFreq['La Reine']
+        del charFreq['La Reine']
+    return charFreq
+        
         
 def characterFreq(pageDict, characters):
     """Given a dictionary mapping page numbers to a list of words on that
@@ -57,21 +82,22 @@ def characterFreq(pageDict, characters):
     mentioned on that page"""
     '''{page number: {character: freq, character: freq}}'''
     
-    joinedChars = [character.replace(" ", "").lower() for character in characters]
+    joinedChars = [character.replace(" ", "").lower() for character in characters] #character name with no spaces
     
     freqDict = {}
     
     for page in pageDict:
         inner = {}
         for character in joinedChars:
-            noSpacesText = ''.join(pageDict[page]).lower()
+            noSpacesText = ''.join(pageDict[page]).lower() #page with no spaces
             
             if character in noSpacesText:
                 readableName = characters[joinedChars.index(character)]
                 inner[readableName] = noSpacesText.count(character)
                 
-        freqDict[page] = inner
-    #print freqDict[253]  
+        freqDict[page] = consolidate(inner,page)
+
+ 
     return freqDict
     
 def printCharFreq(freqDict):
@@ -85,18 +111,25 @@ def printCharFreq(freqDict):
     
     
 characters = ['Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
-'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Duchesse de Valentinois',
-'Diane de Poitiers', 'Marguerite de France', 'Roi', 'Henri Second', 'de Nemours', 'La Reine', 'Catherine de Medicis',
+'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Valentinois',
+'Diane de Poitiers', 'Marguerite de France', 'Roi', 'Henri Second', 'Nemours', 'la Reine',
 'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'premier valet de chambre', 'Chatelart', 
 'Comte de Montgomery', 'Monsieur de Montmorency', 'Chirurgien', 'Connetable de Montmorency', 'Monsieur de Guise',
 'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer ',
 'homme du magasin de soie']
 
+
+#ISSUES:
+#names broken up over pages: 
+    #cardinal de lorraine 89
+    #de Nemours 138, 223 -- probably resolved
+    #monsieur de cleves 241
+#overcounting la reine
 #homme du magasin de soie is difficult -- maybe check if page is 235 AND word 'homme' is there
 
 
 pageDict = eachPageText('novel.txt')
-print pageDict
+#print pageDict
 d = characterFreq(pageDict, characters)
 print d
 #printCharFreq(d)
