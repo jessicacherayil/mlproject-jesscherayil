@@ -1,22 +1,57 @@
-import numpy as np
-import mpld3
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import mpld3
+from mpld3 import plugins
 
-from mpld3 import display_d3
+# Define some CSS to control our custom labels
+css = """
+table
+{
+  border-collapse: collapse;
+}
+th
+{
+  color: #ffffff;
+  background-color: #000000;
+}
+td
+{
+  background-color: #cccccc;
+}
+table, th, td
+{
+  font-family:Arial, Helvetica, sans-serif;
+  border: 1px solid black;
+  text-align: right;
+}
+"""
 
 fig, ax = plt.subplots()
-np.random.seed(0)
-ax.plot(np.random.normal(size=100),
-        np.random.normal(size=100),
-        'or', ms=10, alpha=0.3)
-ax.plot(np.random.normal(size=100),
-        np.random.normal(size=100),
-        'ob', ms=20, alpha=0.1)
+ax.grid(True, alpha=0.3)
 
-ax.set_xlabel('this is x')
-ax.set_ylabel('this is y')
-ax.set_title('Matplotlib Plot Rendered in D3!', size=14)
-ax.grid(color='lightgray', alpha=0.7)
+N = 50
+df = pd.DataFrame(index=range(N))
+df['x'] = np.random.randn(N)
+df['y'] = np.random.randn(N)
+df['z'] = np.random.randn(N)
 
-display_d3(fig)
+labels = []
+for i in range(N):
+    label = df.ix[[i], :].T
+    label.columns = ['Row {0}'.format(i)]
+    # .to_html() is unicode; so make leading 'u' go away with str()
+    labels.append(str(label.to_html()))
 
+points = ax.plot(df.x, df.y, 'o', color='b',
+                 mec='k', ms=15, mew=1, alpha=.6)
+
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title('HTML tooltips', size=20)
+
+tooltip = plugins.PointHTMLTooltip(points[0], labels,
+                                   voffset=10, hoffset=10, css=css)
+plugins.connect(fig, tooltip)
+
+mpld3.show()

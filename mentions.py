@@ -43,10 +43,8 @@ def eachPageText(filename):
         else:
             end = len(textList)-24
         
-        
         pageDict[sortedNums[page_num]] = textList[start+1:end]
 
- 
     return pageDict
     
 def consolidate(charFreq,page_num):
@@ -58,19 +56,37 @@ def consolidate(charFreq,page_num):
         pass
         #word 'homme' is there
     
-    if 'Dauphine' in charFreq and 'reine d\'Ecosse' in charFreq:
-        charFreq['Dauphine'] += charFreq['reine d\'Ecosse']
-        del charFreq['reine d\'Ecosse']
-    if 'Mademoiselle de Chartres' in charFreq and 'Princesse' in charFreq:
-        charFreq['Princesse'] += charFreq['Mademoiselle de Chartres']
-        del charFreq['Mademoiselle de Chartres']
     if 'reine d\'Ecosse' in charFreq:
+        if 'Dauphine' in charFreq: 
+            charFreq['Dauphine'] += charFreq['reine d\'Ecosse']
+        else:
+            charFreq['Dauphine'] = charFreq['reine d\'Ecosse']
         del charFreq['reine d\'Ecosse']
+        
     if 'Mademoiselle de Chartres' in charFreq:
+        if 'Princesse' in charFreq: 
+            charFreq['Princesse'] += charFreq['Mademoiselle de Chartres']
+        else: 
+            charFreq['Princesse'] = charFreq['Mademoiselle de Chartres']
         del charFreq['Mademoiselle de Chartres']
+        
+    if 'Madame de Cleves' in charFreq:
+        if 'Princesse' in charFreq: 
+            charFreq['Princesse'] += charFreq['Madame de Cleves']
+        else:
+            charFreq['Princesse'] = charFreq['Madame de Cleves']
+        del charFreq['Madame de Cleves']
+        
+    if 'Diane de Poitiers' in charFreq:
+        if 'Valentinois' in charFreq: 
+            charFreq['Valentinois'] += charFreq['Diane de Poitiers']
+        else:
+            charFreq['Valentinois'] = charFreq['Diane de Poitiers']
+        del charFreq['Diane de Poitiers']
     if 'La Reine' in charFreq:
         charFreq['Catherine de Medicis'] = charFreq['La Reine']
         del charFreq['La Reine']
+    
     return charFreq
         
         
@@ -105,37 +121,48 @@ def printCharFreq(freqDict):
         print "PAGE " + str(page_num) + ":"
 
         for char, freq in freqDict[page_num].iteritems():
-            print str(char) + " appears " + str(freq) + " times"
+            if freq > 1: 
+                print str(char) + " appears " + str(freq) + " times"
+            else: 
+                print str(char) + " appears " + str(freq) + " time"
         print '\n'
             
     
     
-characters = ['Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
+characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
 'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Valentinois',
 'Diane de Poitiers', 'Marguerite de France', 'Roi', 'Henri Second', 'Nemours', 'la Reine',
 'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'premier valet de chambre', 'Chatelart', 
 'Comte de Montgomery', 'Monsieur de Montmorency', 'Chirurgien', 'Connetable de Montmorency', 'Monsieur de Guise',
-'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer ',
+'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
 'homme du magasin de soie']
-
-
-#ISSUES:
-#names broken up over pages: 
-    #cardinal de lorraine 89
-    #de Nemours 138, 223 -- probably resolved
-    #monsieur de cleves 241
-#overcounting la reine
-#homme du magasin de soie is difficult -- maybe check if page is 235 AND word 'homme' is there
 
 
 pageDict = eachPageText('novel.txt')
 #print pageDict
 d = characterFreq(pageDict, characters)
-print d
-#printCharFreq(d)
+#print d
+printCharFreq(d)
 
-#print dictionary nicely
-#monsieur/madame stuff
-#visualization stuff
-#matplotlib plugin for d3.js
 
+#ISSUES:
+#names broken up over pages: 
+    #cardinal de lorraine 89
+    #monsieur de cleves 241
+    #maybe hardcode for now to get functionality completely working?
+#homme du magasin de soie is difficult -- maybe check if page is 235 AND count 'homme' 
+#overcounting la reine b/c of "la reine" and "reine d'ecosse" --> check proximity thing or just check if ecosse comes after
+#monsieur/madame stuff --> check proximity thing
+
+
+
+#visualization stuff --> matplotlib plugin for d3.js
+    #input: start page num and end page num, output: pie/bar showing each character's mentions over these pages
+    #input: a character, output: how many times each character appears "near" this character. define "near" 
+        #as a certain number of pages around the page of input character (like window) 
+    
+    
+#QUESTIONS
+    #coreference resolution --> stanford core nlp? 
+        #can i use this basic idea to solve monsieur, madame stuff?
+    #help with things to plot 
