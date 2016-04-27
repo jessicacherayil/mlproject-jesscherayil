@@ -83,6 +83,7 @@ def consolidate(charFreq,page_num):
         else:
             charFreq['Valentinois'] = charFreq['Diane de Poitiers']
         del charFreq['Diane de Poitiers']
+        
     if 'La Reine' in charFreq:
         charFreq['Catherine de Medicis'] = charFreq['La Reine']
         del charFreq['La Reine']
@@ -137,12 +138,13 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
 'homme du magasin de soie']
 
+print len(characters)
 
 pageDict = eachPageText('novel.txt')
 #print pageDict
 d = characterFreq(pageDict, characters)
-#print d
-printCharFreq(d)
+print d
+#printCharFreq(d)
 
 
 #ISSUES:
@@ -160,9 +162,15 @@ printCharFreq(d)
     #input: start page num and end page num, output: pie/bar showing each character's mentions over these pages
     #input: a character, output: how many times each character appears "near" this character. define "near" 
         #as a certain number of pages around the page of input character (like window) 
-    
+    #pages , stacked bar plot
     
 #QUESTIONS
     #coreference resolution --> stanford core nlp? 
         #can i use this basic idea to solve monsieur, madame stuff?
     #help with things to plot 
+
+#TODO;
+#set of variants
+#find num pronouns on each page - french stanford corenlp POS tagger
+#more plotting stuff
+#run parser
