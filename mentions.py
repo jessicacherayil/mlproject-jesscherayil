@@ -128,6 +128,19 @@ def printCharFreq(freqDict):
                 print str(char) + " appears " + str(freq) + " time"
         print '\n'
             
+#def countMentions(startPage,endPage,character):
+#    charDict = characterFreq(pageDict, characters)
+#    print 'in'
+#    count = 0
+#    page_num = startPage
+#    while page_num <= endPage:
+#        if page_num in charDict: 
+#            if character in charDict[page_num]:
+#                count += charDict[page_num][character]
+#                print 'count',count
+#            page_num += 1
+#    
+#    return count
     
     
 characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
@@ -138,13 +151,10 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
 'homme du magasin de soie']
 
-print len(characters)
-
 pageDict = eachPageText('novel.txt')
-#print pageDict
 d = characterFreq(pageDict, characters)
-print d
-#printCharFreq(d)
+
+#print countMentions(75, 120, 'Princesse')
 
 
 #ISSUES:
