@@ -117,6 +117,9 @@ def characterFreq(pageDict, characters):
  
     return freqDict
     
+def pronounMention():
+    pass
+    
 def printCharFreq(freqDict):
     for page_num in freqDict.keys():
         print "PAGE " + str(page_num) + ":"
@@ -156,7 +159,6 @@ d = characterFreq(pageDict, characters)
 
 #print countMentions(75, 120, 'Princesse')
 
-
 #ISSUES:
 #names broken up over pages: 
     #cardinal de lorraine 89
@@ -166,21 +168,14 @@ d = characterFreq(pageDict, characters)
 #overcounting la reine b/c of "la reine" and "reine d'ecosse" --> check proximity thing or just check if ecosse comes after
 #monsieur/madame stuff --> check proximity thing
 
-
-
 #visualization stuff --> matplotlib plugin for d3.js
     #input: start page num and end page num, output: pie/bar showing each character's mentions over these pages
     #input: a character, output: how many times each character appears "near" this character. define "near" 
         #as a certain number of pages around the page of input character (like window) 
     #pages , stacked bar plot
-    
-#QUESTIONS
-    #coreference resolution --> stanford core nlp? 
-        #can i use this basic idea to solve monsieur, madame stuff?
-    #help with things to plot 
 
 #TODO;
 #set of variants
 #find num pronouns on each page - french stanford corenlp POS tagger
-#more plotting stuff
+#more plotting stuff  
 #run parser
