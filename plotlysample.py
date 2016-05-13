@@ -60,10 +60,10 @@ def makePlot(characters):
     fig = go.Figure(data=data, layout=layout)
     plot_url = py.plot(fig, filename='mentions')
     
-    
-characters = ['Madame de Cleves','Dauphine', 'Reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
-'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La Cour', 'Valentinois',
-'Diane de Poitiers', 'Marguerite de France', 'Roi', 'Henri Second', 'Nemours', 'la Reine',
+
+characters = ['Princesse','Madame de Cleves','Dauphine',
+'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La Cour', 'Valentinois',
+'Marguerite de France', 'Roi', 'Henri Second', 'Nemours', 'Catherine de Médicis',
 'Chevalier de Guise', 'Cardinal de Lorraine', 'Sancerre', 'Premier Valet De Chambre', 'Chatelart', 
 'Comte de Montgomery', 'Monsieur de Montmorency', 'Chirurgien', 'Connetable de Montmorency', 'Monsieur de Guise',
 'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
