@@ -97,7 +97,7 @@ def characterFreq(pageDict, characters):
     number and each value is another dictionary. In this other dictionary, each
     key is a character and the value is the number of times the character is 
     mentioned on that page"""
-    '''{page number: {character: freq, character: freq}}'''
+    '''{page number: {character: freq, character: freq, ...}}'''
     
     joinedChars = [character.replace(" ", "").lower() for character in characters] #character name with no spaces
     
@@ -117,10 +117,9 @@ def characterFreq(pageDict, characters):
  
     return freqDict
     
-def pronounMention():
-    pass
     
 def printCharFreq(freqDict):
+    '''print frequency dictionary nicely'''
     for page_num in freqDict.keys():
         print "PAGE " + str(page_num) + ":"
 
@@ -130,20 +129,43 @@ def printCharFreq(freqDict):
             else: 
                 print str(char) + " appears " + str(freq) + " time"
         print '\n'
-            
-#def countMentions(startPage,endPage,character):
-#    charDict = characterFreq(pageDict, characters)
-#    print 'in'
-#    count = 0
-#    page_num = startPage
-#    while page_num <= endPage:
-#        if page_num in charDict: 
-#            if character in charDict[page_num]:
-#                count += charDict[page_num][character]
-#                print 'count',count
-#            page_num += 1
-#    
-#    return count
+        
+def getNumMentionsPerPage(character):
+    '''get mentions of each character on each page. not really worth using anymore'''
+    pageDict = eachPageText('novel.txt')
+    d = characterFreq(pageDict, characters)
+    mentions = [] #list of lists. Inner list contains page, charFrequency
+    
+    for i in range(75,254):
+        if i in d:
+            if character in d[i]:
+                mentions.append(d[i][character])
+            else:
+                mentions.append(0)
+        else: #blank pages 
+            mentions.append(0)
+    return mentions
+    
+def getNumMentionsInRange(character, chunk):
+    '''Input: character (string), chunk (int, how many pages
+    counted at a time)
+    Output: list where list[0] is how many times the character
+    is mentioned in the first chunk pages'''
+    
+    charDict = characterFreq(pageDict, characters)
+    mentions = []
+    
+    for i in range(75,254, chunk):
+        countMentions = 0
+        for j in range(i, i+chunk):
+            if j in charDict: 
+                if character in charDict[j]:
+                    countMentions += charDict[j][character]
+                    
+        mentions.append(countMentions)
+    
+    return mentions
+    
     
     
 characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
@@ -156,6 +178,7 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 
 pageDict = eachPageText('novel.txt')
 d = characterFreq(pageDict, characters)
+print getNumMentionsInRange('Roi',5)
 
 #print countMentions(75, 120, 'Princesse')
 

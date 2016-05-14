@@ -3,27 +3,12 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 from mentions import *
 import random
+import argparse
 
-def getNumMentions(character):
 
-    pageDict = eachPageText('novel.txt')
-    d = characterFreq(pageDict, characters)
-    mentions = [] #list of lists. Inner list contains page, charFrequency
+def makeTrace(character, xLabels,chunk):
     
-    for i in range(75,254):
-        if i in d:
-            if character in d[i]:
-                mentions.append(d[i][character])
-            else:
-                mentions.append(0)
-        else: #blank pages 
-            mentions.append(0)
-    return mentions
-
-
-def makeTrace(character, xLabels):
-    
-    yVals = getNumMentions(character)
+    yVals = getNumMentionsInRange(character,chunk)
     randColor = 'rgb(' + str(random.randint(0,256)) + str(random.randint(0,256)) + str(random.randint(0,256)) + ')'
     
     trace0 = go.Bar(
@@ -42,23 +27,25 @@ def makeTrace(character, xLabels):
     
     return trace0
     
+
+def makePlot(character1, character2, character3, chunk):
     
+    characters = [character1,character2,character3]
     
-def makePlot(characters):
-    xLabels = [i for i in range(75,254)]
+    xLabels = [i for i in range(75,254,chunk)]
     
     traces = []
     for character in characters:
-        traces.append(makeTrace(character,xLabels))
-    
-    
+        traces.append(makeTrace(character,xLabels,chunk))
+        
     data = traces
     layout = go.Layout(
-        title='Character Mentions in La Princesse de Clèves',
+        title='Mentions of ' + character1 + ', ' + character2 + ', and ' + character3,
     )
     
     fig = go.Figure(data=data, layout=layout)
     plot_url = py.plot(fig, filename='mentions')
+    
     
 
 characters = ['Princesse','Madame de Cleves','Dauphine',
@@ -69,7 +56,17 @@ characters = ['Princesse','Madame de Cleves','Dauphine',
 'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
 'homme du magasin de soie']
 
-
-makePlot(characters)
+def main():
+    parser = argparse.ArgumentParser(description='Create bar graph of mentions')
+    parser.add_argument('char1', type=str, help='character 1')
+    parser.add_argument('char2', type=str, help='character 2')
+    parser.add_argument('char3', type=str, help='character 3')
+    parser.add_argument('chunk', type=int, help='ranges of page numbers')
+    args = parser.parse_args()   
+    makePlot(args.char1,args.char2,args.char3,args.chunk)
+    
+    
+if __name__=='__main__':
+    main()
 
 #text=['27% market share', '24% market share', '19% market share'], #labels for the bars
