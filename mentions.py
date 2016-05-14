@@ -52,9 +52,15 @@ def consolidate(charFreq,page_num):
     to its frequency on a page, iterate to accumulate counts
     among characters with several nicknames'''
     
+    ##SPECIAL CASES## e.g. character name split over page
     if page_num == 235: 
-        pass
-        #word 'homme' is there
+        charFreq['homme du magasin de soie'] = eachPageText('novel.txt')[235].count('homme')
+        
+    if page_num == 89:
+        charFreq['Cardinal de Lorraine'] += 1
+        
+    if page_num == 241:
+        charFreq['Monsieur de Cleves'] += 1
     
     if 'reine d\'Ecosse' in charFreq:
         if 'Dauphine' in charFreq: 
@@ -177,16 +183,12 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 'homme du magasin de soie']
 
 pageDict = eachPageText('novel.txt')
-d = characterFreq(pageDict, characters)
-print getNumMentionsInRange('Roi',5)
 
-#print countMentions(75, 120, 'Princesse')
+d = characterFreq(pageDict, characters)
+print d
 
 #ISSUES:
-#names broken up over pages: 
-    #cardinal de lorraine 89
-    #monsieur de cleves 241
-    #maybe hardcode for now to get functionality completely working?
+
 #homme du magasin de soie is difficult -- maybe check if page is 235 AND count 'homme' 
 #overcounting la reine b/c of "la reine" and "reine d'ecosse" --> check proximity thing or just check if ecosse comes after
 #monsieur/madame stuff --> check proximity thing
