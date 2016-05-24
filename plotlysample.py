@@ -58,8 +58,20 @@ def makePlot(characters, chunk):
      
      
      data = traces
-     layout = go.Layout(
-         title='Main Character Mentions in La Princesse de Clèves',
+     if len(characters)<10:
+        layout = go.Layout(
+            title='Main Character Mentions in La Princesse de Clèves',
+            xaxis = dict(
+                title = 'Page Number'
+                ),
+            yaxis=dict(
+                title = 'Number of Mentions'
+                ),
+        )
+     
+     else:
+         layout = go.Layout(
+         title='All Character Mentions in La Princesse de Clèves',
          xaxis = dict(
             title = 'Page Number'
             ),
@@ -69,7 +81,10 @@ def makePlot(characters, chunk):
      )
      
      fig = go.Figure(data=data, layout=layout)
-     plot_url = py.plot(fig, filename='main_mentions')
+     if len(characters)<10:
+        plot_url = py.plot(fig, filename='main_mentions')
+     else:
+        plot_url = py.plot(fig, filename ='mentions')
     
     
 
@@ -87,7 +102,8 @@ def main():
     parser = argparse.ArgumentParser(description='Create bar graph of mentions')
     parser.add_argument('chunk', type=int, help='ranges of page numbers')
     args = parser.parse_args()   
-    makePlot(commonChars, args.chunk)
+    #makePlot(commonChars, args.chunk)
+    makePlot(allCharacters, args.chunk)
     
     
 if __name__=='__main__':

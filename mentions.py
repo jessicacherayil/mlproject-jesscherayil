@@ -5,6 +5,7 @@
 import re
 import codecs
 import unicodedata
+import csv
 
 def remove_accents(input_str):
     """Given string input, returns the same string with no accents"""
@@ -172,7 +173,14 @@ def getNumMentionsInRange(character, chunk):
     
     return mentions
     
-    
+def writeToCSV(mentionsDict, filename):
+    with open(filename, 'wb') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Page Number', 'Character','Number of Mentions'])
+        
+        for page_num in mentionsDict.keys():
+            for character in mentionsDict[page_num].keys():
+                writer.writerow([page_num, character, mentionsDict[page_num][character]])
     
 characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
 'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Valentinois',
@@ -185,7 +193,8 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 pageDict = eachPageText('novel.txt')
 
 d = characterFreq(pageDict, characters)
-#print d
+print d.keys()
+writeToCSV(d, 'mentions.csv')
 
 #for character in characters:
 #    print character, sum(getNumMentionsPerPage(character))

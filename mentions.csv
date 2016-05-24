@@ -1,0 +1,820 @@
+Page Number,Character,Number of Mentions
+75,Roi,2
+75,Henri Second,1
+75,la Reine,2
+75,Princesse,1
+75,Valentinois,3
+76,Roi,6
+76,la Reine,3
+76,Princesse,1
+76,La cour,2
+76,Dauphine,2
+76,Valentinois,1
+77,Roi,1
+77,Cardinal de Lorraine,1
+77,Vidame de Chartres,1
+77,Prince de Cleves,1
+77,Chevalier de Guise,1
+77,Nemours,1
+77,La cour,1
+78,Roi,2
+78,Connetable de Montmorency,1
+78,la Reine,1
+78,Princesse,1
+78,La cour,1
+78,Dauphine,1
+79,Roi,4
+79,Cardinal de Lorraine,1
+79,la Reine,3
+79,Monsieur de Montmorency,1
+79,La cour,1
+79,Dauphine,1
+79,Valentinois,3
+80,Roi,3
+80,la Reine,1
+80,La cour,1
+80,Dauphine,1
+80,Monsieur de Montmorency,1
+81,Roi,8
+81,Connetable de Montmorency,1
+81,Cardinal de Lorraine,1
+81,Princesse,1
+81,Nemours,3
+81,La cour,2
+82,Roi,4
+82,la Reine,1
+82,Vidame de Chartres,1
+82,Madame de Chartres,2
+82,Nemours,1
+82,La cour,2
+83,la Reine,1
+83,Monsieur de Cleves,1
+83,Madame de Chartres,1
+83,Princesse,2
+83,Prince de Cleves,1
+83,La cour,1
+84,La cour,1
+84,Roi,7
+84,Princesse,1
+84,Monsieur de Cleves,2
+85,Roi,1
+85,Madame de Chartres,1
+85,Princesse,5
+85,Monsieur de Cleves,3
+86,Roi,2
+86,La cour,1
+86,Dauphine,1
+86,la Reine,3
+86,Vidame de Chartres,1
+86,Madame de Chartres,2
+86,Princesse,3
+86,Prince de Cleves,1
+86,Chevalier de Guise,2
+86,Monsieur de Cleves,1
+86,Valentinois,1
+87,Roi,3
+87,Dauphine,2
+87,la Reine,6
+87,Monsieur de Cleves,3
+87,Madame de Chartres,1
+87,Princesse,1
+87,Valentinois,2
+88,Roi,2
+88,la Reine,1
+88,Madame de Chartres,1
+88,Princesse,2
+88,Chevalier de Guise,1
+88,Valentinois,1
+89,Cardinal de Lorraine,3
+89,Madame de Chartres,4
+89,Princesse,2
+89,Prince de Cleves,1
+89,Chevalier de Guise,1
+89,La cour,2
+90,Roi,2
+90,Gentilhomme,1
+90,Chatelart,2
+90,Dauphine,3
+90,la Reine,4
+90,Princesse,2
+90,Cardinal de Lorraine,1
+90,La cour,1
+91,Roi,3
+91,Dauphine,3
+91,la Reine,5
+91,Madame de Chartres,1
+91,Princesse,2
+91,Valentinois,4
+92,Roi,10
+92,la Reine,5
+92,Monsieur de Cleves,1
+92,Princesse,3
+92,Valentinois,1
+93,Monsieur de Cleves,1
+93,Madame de Chartres,1
+93,Princesse,3
+93,Prince de Cleves,1
+93,Chevalier de Guise,1
+94,Roi,1
+94,Monsieur de Cleves,1
+94,Madame de Chartres,1
+94,Princesse,1
+94,Prince de Cleves,1
+95,Chevalier de Guise,1
+95,Madame de Chartres,1
+95,Princesse,3
+95,Monsieur de Cleves,1
+96,Roi,2
+96,Monsieur de Cleves,1
+96,Madame de Chartres,1
+96,Princesse,1
+96,Prince de Cleves,1
+96,Chevalier de Guise,1
+96,La cour,2
+97,Roi,2
+97,Madame de Chartres,1
+97,Princesse,1
+97,Nemours,1
+97,La cour,2
+97,Dauphine,1
+98,Roi,2
+98,Nemours,3
+98,Monsieur de Guise,1
+98,Princesse,3
+99,Roi,1
+99,la Reine,2
+99,Madame de Chartres,1
+99,Princesse,5
+99,Chevalier de Guise,3
+99,Nemours,6
+99,Dauphine,3
+100,Roi,6
+100,la Reine,1
+100,Madame de Chartres,1
+100,Princesse,2
+100,Nemours,2
+100,La cour,1
+100,Dauphine,1
+100,Valentinois,2
+101,Roi,6
+101,la Reine,3
+101,Madame de Chartres,2
+101,Princesse,2
+101,La cour,2
+102,Roi,5
+102,Madame de Chartres,1
+102,La cour,1
+102,Valentinois,6
+103,Roi,5
+103,Valentinois,3
+104,Roi,5
+104,La cour,2
+104,Dauphine,1
+104,Valentinois,2
+105,Roi,3
+105,La cour,1
+105,Valentinois,1
+106,Roi,7
+106,Madame de Chartres,1
+106,La cour,1
+106,Valentinois,3
+107,la Reine,1
+107,Vidame de Chartres,1
+107,Madame de Chartres,1
+107,Princesse,6
+107,Chevalier de Guise,1
+107,Nemours,1
+107,Dauphine,2
+108,Roi,4
+108,la Reine,4
+108,Princesse,3
+108,Nemours,2
+108,Dauphine,2
+109,Nemours,3
+109,Princesse,1
+109,Dauphine,1
+110,Roi,3
+110,la Reine,3
+110,de Ferrare,1
+110,Princesse,1
+110,Nemours,5
+110,La cour,1
+110,Dauphine,3
+111,Roi,3
+111,la Reine,1
+111,Madame de Chartres,3
+111,Princesse,5
+111,Nemours,3
+111,Dauphine,3
+112,Roi,2
+112,Madame de Chartres,2
+112,Princesse,3
+112,Nemours,4
+112,Dauphine,3
+113,la Reine,1
+113,Monsieur de Cleves,1
+113,Madame de Chartres,3
+113,Princesse,2
+113,Nemours,3
+113,Dauphine,5
+114,Roi,2
+114,Nemours,3
+114,Princesse,2
+114,Dauphine,3
+115,Vidame de Chartres,1
+115,Madame de Chartres,3
+115,Princesse,4
+115,Nemours,2
+115,Monsieur de Cleves,1
+115,Dauphine,2
+116,Princesse,1
+116,Madame de Chartres,1
+116,La cour,1
+116,Nemours,1
+117,Madame de Chartres,3
+117,Princesse,3
+117,Nemours,1
+117,Monsieur de Cleves,1
+118,Nemours,1
+118,La cour,1
+118,Princesse,3
+118,Monsieur de Cleves,3
+119,Roi,1
+119,Sancerre,2
+119,Princesse,2
+119,Monsieur de Cleves,1
+121,Roi,5
+121,La cour,1
+121,Sancerre,3
+121,Valentinois,2
+122,Roi,2
+122,Sancerre,3
+122,Valentinois,2
+123,Roi,1
+123,Sancerre,3
+123,Valentinois,1
+124,Roi,2
+124,La cour,1
+124,Sancerre,3
+125,Roi,2
+125,Sancerre,1
+125,Princesse,1
+125,Monsieur de Cleves,1
+126,Roi,1
+127,Sancerre,2
+128,Sancerre,1
+129,Roi,1
+129,Sancerre,2
+130,Roi,2
+130,Sancerre,3
+130,Monsieur de Cleves,2
+130,Madame de Chartres,1
+130,Princesse,2
+130,Nemours,1
+130,Dauphine,1
+131,Roi,4
+131,Nemours,4
+131,La cour,1
+131,Dauphine,1
+131,la Reine,2
+132,Roi,6
+132,Nemours,3
+132,la Reine,3
+133,Roi,2
+133,la Reine,1
+133,Princesse,3
+133,Nemours,2
+133,Dauphine,4
+134,Roi,7
+134,Princesse,3
+134,Nemours,1
+134,La cour,2
+134,Dauphine,2
+135,Roi,2
+135,Nemours,5
+135,Princesse,5
+135,Dauphine,1
+136,Nemours,2
+136,Princesse,1
+136,Dauphine,1
+136,Monsieur de Cleves,1
+137,Sancerre,1
+137,Monsieur de Cleves,1
+137,Princesse,3
+137,Nemours,2
+137,La cour,1
+138,Nemours,2
+138,La cour,1
+138,Monsieur de Cleves,2
+139,Roi,4
+139,la Reine,2
+139,Monsieur de Guise,4
+140,Roi,3
+140,Monsieur de Cleves,1
+140,Princesse,3
+140,Nemours,4
+140,Dauphine,4
+141,Roi,3
+141,la Reine,1
+141,Princesse,1
+141,Chevalier de Guise,1
+141,Nemours,2
+141,La cour,1
+142,Roi,5
+142,la Reine,2
+142,Princesse,4
+142,La cour,1
+142,Dauphine,2
+143,Roi,7
+144,Roi,4
+144,la Reine,5
+144,Princesse,2
+144,La cour,3
+144,Dauphine,2
+145,Roi,1
+145,Monsieur de Cleves,2
+145,Princesse,7
+145,Nemours,4
+145,Dauphine,4
+146,Roi,1
+146,Monsieur de Cleves,1
+146,Princesse,2
+146,Nemours,2
+146,La cour,1
+146,Dauphine,1
+147,Roi,4
+147,Monsieur de Cleves,1
+147,Madame de Chartres,1
+147,Princesse,1
+147,Nemours,3
+147,Dauphine,1
+148,de Ferrare,2
+148,Roi,6
+148,Nemours,2
+148,Monsieur de Guise,1
+148,Gentilhomme,1
+149,Roi,5
+149,Chatelart,2
+149,la Reine,2
+149,Vidame de Chartres,1
+149,Princesse,2
+149,Chevalier de Guise,1
+149,Nemours,4
+149,Dauphine,1
+150,Roi,2
+150,Nemours,2
+150,Princesse,4
+150,Chevalier de Guise,3
+151,Roi,1
+151,la Reine,1
+151,Princesse,4
+151,Chevalier de Guise,1
+151,Nemours,3
+152,Roi,1
+152,Chatelart,1
+152,la Reine,2
+152,Princesse,3
+152,Chevalier de Guise,1
+152,Nemours,2
+152,Dauphine,2
+153,La cour,1
+154,Roi,1
+155,Roi,1
+155,Nemours,5
+155,Princesse,1
+155,Monsieur de Cleves,1
+156,Roi,1
+156,Monsieur de Cleves,1
+156,Monsieur de Guise,1
+156,Vidame de Chartres,2
+156,de Ferrare,1
+156,Princesse,1
+156,Nemours,3
+156,La cour,1
+156,Dauphine,1
+157,Roi,1
+157,Gentilhomme,2
+157,Chatelart,3
+157,la Reine,4
+157,Vidame de Chartres,2
+157,premier valet de chambre,2
+157,Nemours,2
+157,Dauphine,2
+158,Roi,1
+158,Nemours,1
+158,Princesse,1
+158,Vidame de Chartres,1
+159,Roi,2
+159,la Reine,3
+159,Vidame de Chartres,1
+159,Princesse,1
+159,Nemours,1
+159,La cour,2
+160,Roi,1
+160,la Reine,1
+160,ecuyer,1
+161,Roi,1
+161,la Reine,4
+162,Roi,1
+162,la Reine,3
+162,La cour,1
+163,Roi,4
+163,la Reine,2
+163,Connetable de Montmorency,1
+163,Valentinois,1
+165,la Reine,3
+165,Princesse,1
+166,Roi,3
+166,la Reine,8
+166,Princesse,1
+166,Dauphine,5
+166,Cardinal de Lorraine,1
+167,Roi,1
+167,Chatelart,1
+167,la Reine,3
+167,Nemours,1
+167,La cour,1
+167,Dauphine,2
+168,Chatelart,1
+168,la Reine,5
+168,Princesse,1
+168,Nemours,2
+168,Dauphine,4
+169,Roi,3
+169,la Reine,2
+169,Vidame de Chartres,2
+169,Princesse,2
+169,Nemours,2
+169,Dauphine,3
+170,Roi,2
+170,Chatelart,1
+170,Vidame de Chartres,1
+170,Princesse,3
+170,Nemours,4
+170,Monsieur de Cleves,4
+170,Dauphine,1
+171,Roi,1
+171,la Reine,3
+171,Princesse,4
+171,Prince de Cleves,1
+171,Nemours,3
+171,Dauphine,5
+172,Roi,2
+172,Vidame de Chartres,2
+172,Princesse,4
+172,Nemours,4
+172,Dauphine,1
+173,Roi,2
+173,la Reine,7
+173,Vidame de Chartres,1
+173,Princesse,5
+173,Nemours,3
+173,Dauphine,4
+174,Roi,2
+174,Chatelart,1
+174,la Reine,2
+174,Monsieur de Cleves,3
+174,Princesse,2
+174,Nemours,4
+174,Dauphine,1
+175,Roi,1
+175,Chatelart,1
+175,la Reine,3
+175,Vidame de Chartres,1
+175,Princesse,4
+175,Nemours,3
+175,Dauphine,4
+176,la Reine,3
+176,Vidame de Chartres,2
+176,Princesse,5
+176,Nemours,5
+176,Dauphine,2
+177,Roi,1
+177,Cardinal de Lorraine,1
+177,Vidame de Chartres,1
+177,Princesse,2
+177,Nemours,3
+177,Monsieur de Cleves,2
+177,Dauphine,1
+178,Nemours,5
+178,Monsieur de Cleves,1
+179,Roi,3
+179,Monsieur de Cleves,4
+179,Princesse,3
+179,Nemours,2
+179,Dauphine,1
+180,Roi,1
+180,Nemours,1
+180,Princesse,4
+180,Monsieur de Cleves,2
+181,La cour,3
+181,Monsieur de Cleves,1
+182,Madame de Chartres,1
+182,La cour,2
+182,Princesse,1
+182,Monsieur de Cleves,2
+183,Roi,2
+183,Monsieur de Cleves,1
+184,Roi,2
+184,Nemours,1
+184,Princesse,2
+184,Monsieur de Cleves,3
+185,Roi,2
+185,Gentilhomme,1
+185,Princesse,2
+185,Monsieur de Cleves,3
+186,Nemours,2
+186,Princesse,2
+187,Roi,1
+187,Monsieur de Cleves,1
+187,Princesse,1
+187,Nemours,2
+187,La cour,1
+188,Roi,4
+188,Monsieur de Cleves,2
+188,Princesse,2
+188,Chevalier de Guise,1
+188,Nemours,1
+188,La cour,2
+189,Roi,3
+189,la Reine,1
+189,Monsieur de Cleves,1
+189,Chevalier de Guise,1
+189,Nemours,3
+189,Dauphine,1
+190,Roi,3
+190,la Reine,2
+190,Monsieur de Cleves,2
+190,Princesse,3
+190,Chevalier de Guise,1
+190,Nemours,4
+190,La cour,1
+191,Nemours,4
+191,Princesse,2
+192,Roi,5
+192,la Reine,1
+192,Monsieur de Cleves,1
+192,de Ferrare,1
+192,Princesse,1
+192,Nemours,2
+192,La cour,1
+193,Roi,2
+193,Gentilhomme,1
+193,la Reine,1
+193,Vidame de Chartres,1
+193,Princesse,3
+193,Nemours,3
+193,La cour,1
+193,Dauphine,3
+193,Valentinois,1
+194,Roi,1
+194,la Reine,2
+194,Princesse,3
+194,Nemours,4
+194,La cour,2
+194,Dauphine,3
+195,Roi,1
+195,la Reine,1
+195,Vidame de Chartres,3
+195,Princesse,4
+195,Nemours,4
+195,Dauphine,6
+196,Roi,1
+196,Vidame de Chartres,1
+196,Princesse,4
+196,Nemours,2
+196,La cour,2
+196,Dauphine,3
+197,Roi,3
+197,Princesse,2
+197,Dauphine,3
+198,Roi,3
+198,Monsieur de Cleves,1
+198,Princesse,4
+198,Nemours,3
+198,Dauphine,2
+198,Valentinois,1
+199,Roi,1
+199,Nemours,1
+199,Dauphine,1
+199,Vidame de Chartres,1
+200,Nemours,5
+200,Vidame de Chartres,1
+200,Princesse,1
+200,Monsieur de Cleves,3
+201,Roi,2
+201,Nemours,2
+201,Princesse,2
+201,Monsieur de Cleves,3
+202,Roi,2
+202,Vidame de Chartres,1
+202,Princesse,1
+202,Nemours,2
+202,Monsieur de Cleves,1
+202,Dauphine,1
+203,Roi,1
+203,Nemours,1
+203,Princesse,2
+203,Vidame de Chartres,1
+204,Vidame de Chartres,1
+204,Princesse,3
+204,Nemours,2
+204,La cour,1
+204,Dauphine,1
+205,Roi,4
+205,Espagnols,1
+205,la Reine,3
+205,Monsieur de Cleves,1
+205,Princesse,4
+205,Nemours,1
+205,Dauphine,1
+206,Roi,5
+206,Monsieur de Guise,1
+206,de Ferrare,1
+206,Princesse,2
+206,Nemours,3
+206,La cour,1
+206,Valentinois,1
+207,Roi,6
+207,ecuyer,1
+207,la Reine,1
+207,Comte de Montgomery,2
+207,Princesse,3
+207,Monsieur de Montmorency,1
+207,Nemours,1
+208,Roi,7
+208,Monsieur de Cleves,1
+208,Princesse,2
+208,Nemours,1
+208,La cour,1
+208,Chirurgien,1
+208,Comte de Montgomery,1
+209,Roi,5
+209,la Reine,5
+209,de Ferrare,1
+209,Princesse,1
+209,Nemours,3
+209,La cour,1
+209,Valentinois,1
+211,Roi,5
+211,Cardinal de Lorraine,2
+211,la Reine,4
+211,Vidame de Chartres,1
+211,La cour,2
+211,Valentinois,2
+212,Roi,10
+212,la Reine,2
+212,Monsieur de Cleves,1
+212,Princesse,3
+212,La cour,3
+213,Nemours,3
+213,La cour,3
+213,Princesse,3
+214,Roi,1
+214,la Reine,2
+214,Monsieur de Cleves,3
+214,Princesse,2
+214,Nemours,4
+214,Dauphine,2
+215,Nemours,4
+215,Princesse,1
+215,Monsieur de Cleves,2
+216,Roi,1
+216,Monsieur de Cleves,1
+216,Princesse,1
+216,Nemours,1
+216,La cour,1
+216,Dauphine,1
+217,Roi,2
+217,Monsieur de Cleves,2
+217,Princesse,2
+217,Nemours,3
+217,Valentinois,1
+218,La cour,1
+218,Nemours,2
+218,Princesse,8
+218,la Reine,1
+219,Roi,1
+219,Cardinal de Lorraine,1
+219,la Reine,1
+219,Monsieur de Cleves,3
+219,Princesse,3
+219,Nemours,3
+219,La cour,1
+220,Roi,1
+220,Nemours,7
+220,Princesse,3
+220,Gentilhomme,3
+221,Nemours,4
+221,Princesse,2
+222,Nemours,2
+222,Princesse,2
+223,Nemours,3
+223,Princesse,3
+223,Gentilhomme,2
+223,Monsieur de Cleves,1
+224,Nemours,1
+224,Princesse,2
+225,Roi,1
+225,Gentilhomme,1
+225,Monsieur de Cleves,1
+225,Princesse,5
+225,Nemours,3
+226,Roi,3
+226,Nemours,5
+226,Princesse,3
+227,Nemours,4
+227,Princesse,4
+227,Gentilhomme,1
+227,Monsieur de Cleves,1
+228,Roi,1
+228,Gentilhomme,2
+228,Monsieur de Cleves,4
+228,Princesse,1
+228,Nemours,2
+228,La cour,1
+229,Nemours,1
+229,Princesse,2
+229,Monsieur de Cleves,4
+230,Nemours,3
+230,Princesse,1
+231,Roi,1
+231,Nemours,4
+231,Princesse,1
+231,Monsieur de Cleves,2
+232,Roi,2
+232,la Reine,1
+232,Monsieur de Cleves,1
+232,Princesse,2
+232,Nemours,2
+233,Roi,1
+233,Gentilhomme,1
+233,ecuyer,1
+233,Monsieur de Cleves,1
+233,Princesse,4
+233,Nemours,4
+234,Roi,1
+234,Monsieur de Guise,1
+234,Monsieur de Cleves,1
+234,Princesse,1
+234,Nemours,2
+234,La cour,1
+235,homme du magasin de soie,3
+235,Nemours,5
+235,Princesse,3
+236,Roi,2
+236,Nemours,3
+236,La cour,1
+236,Princesse,2
+237,Nemours,5
+237,Princesse,1
+237,Monsieur de Cleves,1
+238,Roi,1
+238,la Reine,1
+238,Vidame de Chartres,1
+238,Princesse,4
+238,Nemours,3
+239,Nemours,6
+239,Princesse,5
+240,Roi,2
+240,Princesse,1
+241,Nemours,2
+241,Dauphine,1
+241,Monsieur de Cleves,3
+242,Roi,1
+242,Nemours,1
+242,Monsieur de Cleves,2
+243,Nemours,1
+244,Roi,2
+244,Princesse,1
+244,Monsieur de Cleves,1
+245,Roi,4
+245,Nemours,1
+245,la Reine,1
+245,Monsieur de Cleves,1
+246,Roi,2
+246,Nemours,2
+246,Princesse,2
+246,Monsieur de Cleves,1
+247,Nemours,3
+247,Monsieur de Cleves,2
+248,Roi,1
+248,Nemours,4
+248,Princesse,4
+249,Roi,1
+249,Nemours,6
+249,Princesse,1
+250,la Reine,1
+250,Monsieur de Cleves,1
+250,Princesse,2
+250,Nemours,4
+250,La cour,2
+251,Nemours,3
+251,La cour,1
+251,Princesse,3
+251,Monsieur de Cleves,1
+252,Princesse,2
+252,Nemours,3
+252,La cour,1
+252,la Reine,1
+253,Princesse,2
