@@ -109,20 +109,26 @@ def characterFreq(pageDict, characters):
     joinedChars = [character.replace(" ", "").lower() for character in characters] #character name with no spaces
     
     freqDict = {}
+    indexDict = {}
     
     for page in pageDict:
         inner = {}
+
         for character in joinedChars:
             noSpacesText = ''.join(pageDict[page]).lower() #page with no spaces
             
             if character in noSpacesText:
+                if page not in indexDict:
+                    indexDict[page] = [(character, noSpacesText.index(character))]
+                elif page in indexDict: 
+                    indexDict[page].append((character, noSpacesText.index(character)))
                 readableName = characters[joinedChars.index(character)]
                 inner[readableName] = noSpacesText.count(character)
                 
         freqDict[page] = consolidate(inner,page)
 
  
-    return freqDict
+    return freqDict, indexDict
     
     
 def printCharFreq(freqDict):
@@ -140,7 +146,7 @@ def printCharFreq(freqDict):
 def getNumMentionsPerPage(character):
     '''get mentions of each character on each page. not really worth using anymore'''
     pageDict = eachPageText('novel.txt')
-    d = characterFreq(pageDict, characters)
+    d,i = characterFreq(pageDict, characters)
     mentions = [] #list of lists. Inner list contains page, charFrequency
     
     for i in range(75,254):
@@ -159,7 +165,7 @@ def getNumMentionsInRange(character, chunk):
     Output: list where list[0] is how many times the character
     is mentioned in the first chunk pages'''
     
-    charDict = characterFreq(pageDict, characters)
+    charDict,iDict = characterFreq(pageDict, characters)
     mentions = []
     
     for i in range(75,254, chunk):
@@ -181,6 +187,45 @@ def writeToCSV(mentionsDict, filename):
         for page_num in mentionsDict.keys():
             for character in mentionsDict[page_num].keys():
                 writer.writerow([page_num, character, mentionsDict[page_num][character]])
+
+
+def findSearchSpace(indexDict):
+    search = {}
+    for page in indexDict:
+        if len(indexDict[page]) > 1: 
+            for char in range(len(indexDict[page]) - 1):
+                char1 = indexDict[page][char]
+                char2 = indexDict[page][char+1]
+                space = (char1[1], char2[1])
+                search[(char1[0],char2[0])] = (page,space)
+
+    return search
+
+def findVocab(search,vocabulary,pageDict):
+    result = {}
+    for k,v in search.items():
+        page = v[0]
+        space = v[1]
+        start = space[0]
+        end = space[1]
+        if not start < end:
+            temp = start
+            start = end
+            end = temp
+        noSpacesText = ''.join(pageDict[page]).lower()
+        text = noSpacesText[start:end]
+        for word in vocabulary:
+            if word in text:
+                if k not in result: 
+                    
+                    result[k] = [word]
+                else:
+                    
+                    result[k].append(word)
+
+    return result
+
+
     
 characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
 'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Valentinois',
@@ -192,9 +237,12 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 
 pageDict = eachPageText('novel.txt')
 
-d = characterFreq(pageDict, characters)
-print d.keys()
-writeToCSV(d, 'mentions.csv')
+d,i = characterFreq(pageDict, characters)
+search= findSearchSpace(i)
+vocabulary = ['dit', 'regard', 'voy', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donn', 'vol']
+print findVocab(search, vocabulary,pageDict)
+#print d.keys()
+#writeToCSV(d, 'mentions.csv')
 
 #for character in characters:
 #    print character, sum(getNumMentionsPerPage(character))
