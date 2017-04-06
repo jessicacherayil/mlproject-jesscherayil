@@ -6,6 +6,7 @@ import re
 import codecs
 import unicodedata
 import csv
+import numpy as np
 
 def remove_accents(input_str):
     """Given string input, returns the same string with no accents"""
@@ -47,6 +48,52 @@ def eachPageText(filename):
         pageDict[sortedNums[page_num]] = textList[start+1:end]
 
     return pageDict
+
+
+
+def newCharFreq(filename):
+
+    characters = ['MadamedeCleves','Dauphine', 'reine', 'Mademoiselle', 'Princesse',
+    'MonsieurdeCleves', 'Prince', 'MadamedeChartres', 'Vidame', 'cour', 'Valentinois',
+    'Diane', 'Marguerite', 'Roi', 'roi', 'Henri', 'Nemours', 'Reine',
+    'Chevalier', 'Cardinal', 'Sancerre', 'valet', 'Chatelart', 
+    'Montgomery', 'MonsieurdeMontmorency', 'Chirurgien', 'Connetable', 'MonsieurdeGuise',
+    'Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
+    'soie']
+
+
+
+    text = remove_accents(codecs.open(filename, 'r','utf8').read())
+    textList = text.split()
+    textList = np.array(textList)
+    indices = {}
+
+    for word in range(len(textList)): 
+        if textList[word] == 'Madame':
+            if textList[word+1] == 'de' and textList[word+2]=='Cleves':
+                textList[word] == 'MadamedeCleves'
+                textList = textList[:word+1] + textList[word+3:]
+            elif textList[word+1] == 'de' and textList[word+2]=='Chartres':
+                textList[word] == 'MadamedeChartres'
+                textList = textList[:word+1] + textList[word+3:]
+        elif textList[word] == 'Monsieur':
+            if textList[word+1] == 'de' and textList[word+2]=='Cleves':
+                textList[word] == 'MonsieurdeCleves'
+                textList = textList[:word+1] + textList[word+3:]
+            elif textList[word+1] == 'de' and textList[word+2]=='Montmorency':
+                textList[word] == 'MonsieurdeMontmorency'
+                textList = textList[:word+1] + textList[word+3:]
+            elif textList[word+1] == 'de' and textList[word+2]=='Guise':
+                textList[word] == 'MonsieurdeGuise'
+                textList = textList[:word+1] + textList[word+3:]
+
+
+    for character in characters:
+        indices[character] = np.where(textList == character)[0]
+
+    return indices
+
+#print newCharFreq('novel.txt') 
     
 def consolidate(charFreq,page_num):
     '''Given an inner dictionary mapping each character
@@ -145,7 +192,7 @@ def printCharFreq(freqDict):
         print '\n'
         
 def getNumMentionsPerPage(character):
-    '''get mentions of each character on each page. not really worth using anymore'''
+    '''get mentions of each character on each page'''
     pageDict = eachPageText('novel.txt')
     d,i = characterFreq(pageDict, characters)
     mentions = [] #list of lists. Inner list contains page, charFrequency
@@ -253,9 +300,17 @@ def avgNumWords(search, pageDict):
 
         #print commaText[i1:i2]
         l = commaText.split(',')
-        
+
         print len(l)
+
         
+def avgNumMentionsPerPage(characters):
+    avgMention = {}
+    for character in characters:
+        mentions = getNumMentionsPerPage(character)
+        avgMention[character] = sum(mentions)/float(len(mentions))
+    return avgMention
+
 
 
     
@@ -269,13 +324,14 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 
 y = [1,1,1,1,1,0,0,1,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0]
 
-pageDict = eachPageText('novel.txt')
+#pageDict = eachPageText('novel.txt')
 
-d,i = characterFreq(pageDict, characters)
-search= findSearchSpace(i)
-vocabulary = ['dit', 'regardait', 'voyait', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donne', 'donnait', 'vol']
-#print findVocab(search, vocabulary,pageDict)
-avgNumWords(search, pageDict)
+#d,i = characterFreq(pageDict, characters)
+print avgNumMentionsPerPage(characters)
+# search= findSearchSpace(i)
+# vocabulary = ['dit', 'regardait', 'voyait', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donne', 'donnait', 'vol']
+# #print findVocab(search, vocabulary,pageDict)
+# avgNumWords(search, pageDict)
 #writeToCSV(d, 'mentions.csv')
 
 #for character in characters:
