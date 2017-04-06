@@ -95,6 +95,7 @@ def consolidate(charFreq,page_num):
         charFreq['Catherine de Medicis'] = charFreq['La Reine']
         del charFreq['La Reine']
     
+    
     return charFreq
         
         
@@ -190,6 +191,9 @@ def writeToCSV(mentionsDict, filename):
 
 
 def findSearchSpace(indexDict):
+    '''Given a dictionary mapping page number to (character, index of mention),
+    return a dictionary in which the keys are 2 characters, and the values
+    are the pagenum and the region of text in between the 2 characters'''
     search = {}
     for page in indexDict:
         if len(indexDict[page]) > 1: 
@@ -202,6 +206,9 @@ def findSearchSpace(indexDict):
     return search
 
 def findVocab(search,vocabulary,pageDict):
+    '''given a search space, a target vocabulary, and a dictionary mapping
+    page number to the text on each page, return the target words found
+    in each search space'''
     result = {}
     for k,v in search.items():
         page = v[0]
@@ -213,17 +220,42 @@ def findVocab(search,vocabulary,pageDict):
             start = end
             end = temp
         noSpacesText = ''.join(pageDict[page]).lower()
+
         text = noSpacesText[start:end]
         for word in vocabulary:
             if word in text:
-                if k not in result: 
+                if (k,page) not in result: 
                     
-                    result[k] = [word]
+                    result[(k,page)] = [word]
                 else:
                     
-                    result[k].append(word)
+                    result[(k,page)].append(word)
 
     return result
+
+def avgNumWords(search, pageDict):
+    '''given a search space, and a dictionary mapping page number
+    to the text on each page, find the average number of words 
+    between two characters'''
+    for k,v in search.items():
+        char1 = k[0]
+        char2 = k[1]
+        page = v[0]
+        space = v[1]
+        start = space[0]
+        end = space[1]
+
+        commaText = ','.join(pageDict[page]).lower()
+        noSpacesText = ''.join(pageDict[page]).lower()
+
+        i1 = noSpacesText.index(char1)
+        i2 = noSpacesText.index(char2)
+
+        #print commaText[i1:i2]
+        l = commaText.split(',')
+        
+        print len(l)
+        
 
 
     
@@ -235,13 +267,15 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 'de Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
 'homme du magasin de soie']
 
+y = [1,1,1,1,1,0,0,1,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0]
+
 pageDict = eachPageText('novel.txt')
 
 d,i = characterFreq(pageDict, characters)
 search= findSearchSpace(i)
-vocabulary = ['dit', 'regard', 'voy', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donn', 'vol']
-print findVocab(search, vocabulary,pageDict)
-#print d.keys()
+vocabulary = ['dit', 'regardait', 'voyait', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donne', 'donnait', 'vol']
+#print findVocab(search, vocabulary,pageDict)
+avgNumWords(search, pageDict)
 #writeToCSV(d, 'mentions.csv')
 
 #for character in characters:
