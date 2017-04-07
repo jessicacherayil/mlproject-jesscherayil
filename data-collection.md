@@ -1,0 +1,6 @@
+My data consists of 1) a matrix, in which each row represents a character and each column represents a feature that is some measure of interaction, and 2) The y array (found at the bottom of mentions.py) contains the true labels, which are the genders for each character (1 for female, 0 for male). The matrix will be self-created by parsing the text (novel.txt, included in the repo), so most of my work will be calculating feature values. I have not yet finished creating all features for all characters, but once I do, running the data through the linear regression model should be fairly simple.  
+
+You can find all my featurization work in mentions.py. I have already written methods to retrieve the average number of mentions per page for each character, and the average distance between two characters.
+I've also started work on capturing interactions between characters, so that I can extract more features, such as the percentage of verbal vs. non-verbal interactions, or the number of interactions had with the princess.  
+
+I am planning on splitting the data of 30 characters into 20 training, 5 development, 5 testing.  
