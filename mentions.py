@@ -284,6 +284,8 @@ def avgNumWords(search, pageDict):
     '''given a search space, and a dictionary mapping page number
     to the text on each page, find the average number of words 
     between two characters'''
+    d = {}
+   # print search.items()
     for k,v in search.items():
         char1 = k[0]
         char2 = k[1]
@@ -300,8 +302,51 @@ def avgNumWords(search, pageDict):
 
         #print commaText[i1:i2]
         l = commaText.split(',')
+        d[(char1, char2)] = len(l)
+    return d
 
-        print len(l)
+def avgNumWordsChar(chars,distance_dict):
+    '''given a dictionary mapping two characters to the average 
+    number of words in between their mention and another character's mention,
+    calculate the avg num words between each character and any other character, and 
+    return in a dictionary'''
+    result = {}
+    for char in chars: 
+        for d in distance_dict.keys():
+            if d[0] == char:
+                if char not in result: 
+                    result[char] = [distance_dict[d]]
+                else:
+                    result[char].append(distance_dict[d])
+
+    for elt in result:
+        denom = len(result[elt])
+        num = sum(result[elt])
+        result[elt] = float(num)/float(denom)
+
+    return result
+
+def avgNumWordsPrin(chars,distance_dict):
+    '''given a dictionary mapping two characters to the average 
+    number of words in between their mention and another character's mention,
+    calculate the avg num words between each character and any other character, and 
+    return in a dictionary'''
+    result = {}
+    for char in chars: 
+        for d in distance_dict.keys():
+            if d[0] == char and d[1] == 'madamedecleves':
+                
+                if char not in result: 
+                    result[char] = [distance_dict[d]]
+                else:
+                    result[char].append(distance_dict[d])
+
+    for elt in result:
+        denom = len(result[elt])
+        num = sum(result[elt])
+        result[elt] = float(num)/float(denom)
+
+    return result
 
         
 def avgNumMentionsPerPage(characters):
@@ -324,14 +369,23 @@ characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de
 
 y = [1,1,1,1,1,0,0,1,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0]
 
-#pageDict = eachPageText('novel.txt')
+pageDict = eachPageText('novel.txt')
 
-#d,i = characterFreq(pageDict, characters)
-print avgNumMentionsPerPage(characters)
-# search= findSearchSpace(i)
+d,i = characterFreq(pageDict, characters)
+#print avgNumMentionsPerPage(characters)
+search= findSearchSpace(i)
 # vocabulary = ['dit', 'regardait', 'voyait', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donne', 'donnait', 'vol']
 # #print findVocab(search, vocabulary,pageDict)
-# avgNumWords(search, pageDict)
+distance_dict = avgNumWords(search, pageDict)
+characters2 = ['MadamedeCleves','Dauphine', 'reine', 'Mademoiselle', 'Princesse',
+'MonsieurdeCleves', 'Prince', 'MadamedeChartres', 'Vidame', 'cour', 'Valentinois',
+'Diane', 'Marguerite', 'Roi', 'roi', 'Henri', 'Nemours', 'Reine',
+'Chevalier', 'Cardinal', 'Sancerre', 'valet', 'Chatelart', 
+'Montgomery', 'MonsieurdeMontmorency', 'Chirurgien', 'Connetable', 'MonsieurdeGuise',
+'Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
+'soie']
+#print avgNumWordsChar(map(str.lower, characters2),distance_dict)
+print avgNumWordsPrin(map(str.lower, characters2),distance_dict)
 #writeToCSV(d, 'mentions.csv')
 
 #for character in characters:
