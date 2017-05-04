@@ -158,12 +158,14 @@ def characterFreq(pageDict, characters):
     
     freqDict = {}
     indexDict = {}
+    tList = []
     
     for page in pageDict:
         inner = {}
 
         for character in joinedChars:
             noSpacesText = ''.join(pageDict[page]).lower() #page with no spaces
+            tList.append(noSpacesText) 
             
             if character in noSpacesText:
                 if page not in indexDict:
@@ -176,7 +178,47 @@ def characterFreq(pageDict, characters):
         freqDict[page] = consolidate(inner,page)
 
  
-    return freqDict, indexDict
+    return freqDict, indexDict,tList
+
+# def findChar(tList, characters):
+#     joinedChars = [character.replace(" ", "").lower() for character in characters]
+
+#     d = {}
+
+#     for p in range(len(tList)):
+#         for character in joinedChars:
+#             if character in tList[p]:
+#                 if character not in d:
+#                     d[character] = [tList[p].index(character)]
+
+
+def tfidf_char(characters,pageDict):
+    chars = {}
+
+
+    for char in characters:
+        for page in pageDict: 
+            
+            noSpacesText = '-'.join(pageDict[page]).lower()
+                #commaText = ','.join(pageDict[page]).lower()
+            if char in noSpacesText: 
+                i1 = noSpacesText.index(char)
+
+
+                start = i1 - 100
+                end = i1 + 100
+                
+                chunk = pageDict[page][start:end]
+
+
+                chars[char] = len(chunk)
+                #print chunk
+            # #print commaText[i1:i2]
+            # l = commaText.split(',')
+            # d[(char1, char2)] = len(l)
+    return chars
+
+
     
     
 def printCharFreq(freqDict):
@@ -331,6 +373,7 @@ def avgNumWordsPrin(chars,distance_dict):
     number of words in between their mention and another character's mention,
     calculate the avg num words between each character and any other character, and 
     return in a dictionary'''
+
     result = {}
     for char in chars: 
         for d in distance_dict.keys():
@@ -358,6 +401,8 @@ def avgNumMentionsPerPage(characters):
 
 
 
+
+
     
 characters = ['Madame de Cleves','Dauphine', 'reine d\'Ecosse', 'Mademoiselle de Chartres', 'Princesse',
 'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Valentinois',
@@ -371,21 +416,31 @@ y = [1,1,1,1,1,0,0,1,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0]
 
 pageDict = eachPageText('novel.txt')
 
-d,i = characterFreq(pageDict, characters)
+d,i,t = characterFreq(pageDict, characters)
 #print avgNumMentionsPerPage(characters)
 search= findSearchSpace(i)
 # vocabulary = ['dit', 'regardait', 'voyait', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donne', 'donnait', 'vol']
 # #print findVocab(search, vocabulary,pageDict)
 distance_dict = avgNumWords(search, pageDict)
-characters2 = ['MadamedeCleves','Dauphine', 'reine', 'Mademoiselle', 'Princesse',
+characters2 = ['Madame-de-Cleves','Dauphine', 'reine', 'Mademoiselle', 'Princesse',
 'MonsieurdeCleves', 'Prince', 'MadamedeChartres', 'Vidame', 'cour', 'Valentinois',
 'Diane', 'Marguerite', 'Roi', 'roi', 'Henri', 'Nemours', 'Reine',
 'Chevalier', 'Cardinal', 'Sancerre', 'valet', 'Chatelart', 
 'Montgomery', 'MonsieurdeMontmorency', 'Chirurgien', 'Connetable', 'MonsieurdeGuise',
 'Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
 'soie']
+
+characters3 = ['madame-de-cleves','dauphine', 'reine', 'mademoiselle', 'princesse',
+'monsieur-de-cleves', 'prince', 'madame-de-chartres', 'vidame', 'cour', 'valentinois',
+'diane', 'marguerite', 'Roi', 'roi', 'henri', 'nemours', 'reine',
+'Chevalier', 'Cardinal', 'Sancerre', 'valet', 'Chatelart', 
+'montgomery', 'monsieur-de-montmorency', 'Chirurgien', 'Connetable', 'monsieur-de-guise',
+'Ferrare', 'Espagnols', 'Gentilhomme', 'ecuyer',
+'soie']
 #print avgNumWordsChar(map(str.lower, characters2),distance_dict)
-print avgNumWordsPrin(map(str.lower, characters2),distance_dict)
+#print avgNumWordsPrin(map(str.lower, characters2),distance_dict)
+#findChar(t, characters)
+print tfidf_char(characters3,pageDict)
 #writeToCSV(d, 'mentions.csv')
 
 #for character in characters:
