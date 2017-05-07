@@ -80,10 +80,10 @@ def parseText(l):
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
 		elif word in nemours:
-			if l[i-2] == 'monsieur':
-				l[i] == 'chevalierdeguise'
+			if l[i-2] == 'duc':
+				l[i] == 'ducdenemours'
 			elif l[i-2] == 'monsieur':
-				l[i] == 'monsieurdeguise'
+				l[i] == 'ducdenemours'
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
 
@@ -91,28 +91,58 @@ def parseText(l):
 
 	return new_l
 
-
-characters = ['Dauphine', 'Marie-Stuart', 'd\'Ecosse', 
- 'La cour', 'Duchesse de Valentinois',
-'Diane de Poitiers', 'Marguerite de France', 'Henri', 'Roi', 'Duc de Nemours', 'Catherine de Medicis', 'La Reine', 
-'Cardinal de Lorraine', 'Sancerre',  'valet', 'Chatelart', 
-'Marechal de Saint-Andre', 'Monsieur de Ferrare',  'Prince d\'Orange','Comte de Montgomery',
-'chirurgien',  'espagnols', 'Gentilhomme', 'ecuyer', 
-'Madame de Martigues', 'soie', 'Madame de Dampierre', 'Elizabeth', 'Duc de Nevers', 'Monsieur d\'Anville', 
-'Lignerolles', 'Monsieur le Dauphin', 'Francois II', 'Prince de Conde', 'Madame de Tournon', 'Estouteville', 
- 'Roi de Navarre']
+def avgDistance(l, chars):
+	npl = np.asarray(l)
+	princesse = np.where(npl == 'princessedecleves')[0]
+	charDists = {}
+	for char in chars:
+		dists = np.where(npl == char)[0]
+		charDists[char] = dists
 
 
+	avgs = {}
+	for char in charDists:
+		avg = 0
+		denom = 1
+		for elt in charDists[char]:
+			for i in range(len(princesse)):
+				if princesse[i]>elt:
+					avg += (princesse[i]-elt)
+					denom += 1
 
-characters = ['Dauphine', 'Marie-Stuart', 'd\'Ecosse', 'Mademoiselle de Chartres', 'Princesse de Cleves',
-'Monsieur de Cleves', 'Prince de Cleves', 'Madame de Chartres', 'Vidame de Chartres', 'La cour', 'Duchesse de Valentinois',
-'Diane de Poitiers', 'Marguerite de France', 'Henri', 'Roi', 'Duc de Nemours', 'Catherine de Medicis', 'La Reine', 
-'Cardinal de Lorraine', 'Sancerre', 'Chevalier de Guise', 'valet', 'Chatelart', 'Duchesse de Mercoeur',
-'Marechal de Saint-Andre', 'Monsieur de Ferrare', 'Monsieur de Guise', 'Prince d\'Orange','Comte de Montgomery',
-'Monsieur de Montmorency', 'chirurgien', 'Connetable de Montmorency', 'espagnols', 'Gentilhomme', 'ecuyer', 
-'Madame de Martigues', 'soie', 'Madame de Dampierre', 'Elizabeth', 'Duc de Nevers', 'Monsieur d\'Anville', 
-'Lignerolles', 'Monsieur le Dauphin', 'Francois II', 'Prince de Conde', 'Madame de Tournon', 'Estouteville', 
-'Madame de Mercoeur', 'Roi de Navarre']
+		avgs[char] = float(avg)/denom
+
+
+
+
+	return avgs
+
+
+
+
+
+# characters = ['Dauphine', 'Marie-Stuart', 'd\'Ecosse', 
+#  'La cour', 'Duchesse de Valentinois',
+# 'Diane de Poitiers', 'Marguerite de France', 'Henri', 'Roi', 'Duc de Nemours', 'Catherine de Medicis', 'La Reine', 
+# 'Cardinal de Lorraine', 'Sancerre',  'valet', 'Chatelart', 
+# 'Marechal de Saint-Andre', 'Monsieur de Ferrare',  'Prince d\'Orange','Comte de Montgomery',
+# 'chirurgien',  'espagnols', 'Gentilhomme', 'ecuyer', 
+# 'Madame de Martigues', 'soie', 'Madame de Dampierre', 'Elizabeth', 'Duc de Nevers', 'Monsieur d\'Anville', 
+# 'Lignerolles', 'Monsieur le Dauphin', 'Francois II', 'Prince de Conde', 'Madame de Tournon', 'Estouteville', 
+#  'Roi de Navarre']
+
+
+
+characters = ['dauphine', 'marie-stuart', 'd\'Ecosse', 'mademoiselledechartres', 'princessedecleves',
+'monsieurdecleves', 'princedecleves', 'madamedechartres', 'vidamedechartres', 'cour', 'valentinois',
+'poitiers', 'marguerite', 'henri', 'roi', 'nemours', 'medicis', 'reine', 
+'lorraine', 'sancerre', 'chevalierdeguise', 'valet', 'chatelart', 'duchessedemercoeur',
+'marechal', 'ferrare', 'monsieurdeguise', 'd\'orange','montgomery',
+'monsieurdemontmorency', 'chirurgien', 'connetabledemontmorency', 'espagnols', 'gentilhomme', 'ecuyer', 
+'madamedemartigues', 'soie', 'dampierre', 'elizabeth', 'nevers', 'd\'anville', 
+'lignerolles', 'dauphin', 'francois', 'conde', 'tournon', 'estouteville', 
+'madamedemercoeur', 'navarre']
 
 #print textToList('novel.txt')
-print parseText(textToList('novel.txt'))
+a= parseText(textToList('novel.txt'))
+print avgDistance(a, characters)
