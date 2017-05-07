@@ -92,6 +92,10 @@ def parseText(l):
 	return new_l
 
 def avgDistance(l, chars):
+	'''given the text and a list of characters, 
+	return the average distance in number of words
+	from a character's mention to a mention of the princess'''
+
 	npl = np.asarray(l)
 
 	princesse = np.where(npl == 'princessedecleves')[0]
@@ -109,24 +113,66 @@ def avgDistance(l, chars):
 
 	avgs = {}
 	for char in charDists:
-		#print 'CHAR', charDists[char]
-		#break
+
 		avg = 0
 		denom = 1
-		for elt in charDists[char]:
-			for i in range(len(princesse)):
+		for elt in charDists[char]: 
+			for i in range(len(princesse)): 
 				if princesse[i]>elt:
-					avg += (princesse[i]-elt)
+					avg += (princesse[i]-elt) 
 					denom += 1
 					break
 
-		avgs[char] = float(avg)/denom
-
-
-
+		avgs[char] = float(avg)/denom-1
 
 	return avgs
 
+def charAvgDistance(l, chars):
+	'''given the text and a list of characters, return the average distance
+	between a character's mention, and the mention of the next character'''
+
+	npl = np.asarray(l)
+
+	charDists = {}
+	for char in chars:
+		dists = np.append(np.where(npl == char)[0], np.where(npl == char+',')[0])
+		np.append(dists, np.where(npl == char+'.')[0])
+		charDists[char] = np.sort(dists)
+
+
+	avgs = {}
+	for char in charDists:
+		next = []
+		print 'CHAR IS', char
+		avg = 0
+		denom = 1
+		for elt in charDists[char]: #for each index of a mention of this character
+			for char2 in charDists: 
+				
+				if char != char2: 
+
+					for elt2 in charDists[char2]:
+
+						if elt2 > elt:
+							
+							next.append((char2,elt2-elt))
+							break
+
+			print 'NEXTS', next
+							
+		if len(next) != 0: 
+			avgs[char] = float(sum(x[1] for x in next))/len(next)
+		else: 
+			avgs[char] = 0.0
+		
+		
+		
+
+
+					
+
+
+	return avgs
 
 
 
@@ -156,4 +202,4 @@ characters = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecle
 #print textToList('novel.txt')
 a= parseText(textToList('novel.txt'))
 #print a
-print avgDistance(a, characters)
+print charAvgDistance(a, characters)
