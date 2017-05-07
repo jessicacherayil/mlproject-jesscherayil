@@ -32,7 +32,7 @@ def parseText(l):
 		cleves = ['cleves', 'cleves,', 'cleves.']
 		chartres = ['chartres', 'chartres,', 'chartres.']
 		mercoeur = ['mercoeur', 'mercoeur,', 'mercoeur.']
-		montmorency = ['montmorency', 'montmorency,', 'montmorency.']
+		
 		guise = ['guise', 'guise,', 'guise.']
 		nemours = ['nemours', 'nemours,', 'nemours.']
 
@@ -49,6 +49,8 @@ def parseText(l):
 				l[i] = 'princessedecleves'
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
+
+
 		elif word in chartres:
 			if l[i-2] == 'mademoiselle':
 				l[i] = 'princessedecleves'
@@ -58,32 +60,30 @@ def parseText(l):
 				l[i] = 'vidamedechartres'
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
+
+
 		elif word in mercoeur:
 			if l[i-2] == 'duchesse':
-				l[i] == 'duchessedemercoeur'
+				l[i] = 'duchessedemercoeur'
 			elif l[i-2] == 'madame':
-				l[i] == 'duchessedemercoeur'
+				l[i] = 'duchessedemercoeur'
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
-		elif word in montmorency:
-			if l[i-2] == 'monsieur':
-				l[i] == 'monsieurdemontmorency'
-			elif l[i-2] == 'connetable':
-				l[i] == 'connetabledemontmorency'
-			l[i-2] = 'TO-DELETE'
-			l[i-1] = 'TO-DELETE'
+
 		elif word in guise:
+	
 			if l[i-2] == 'chevalier':
-				l[i] == 'chevalierdeguise'
+				l[i] = 'chevalierdeguise'
 			elif l[i-2] == 'monsieur':
-				l[i] == 'monsieurdeguise'
+				l[i] = 'monsieurdeguise'
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
+
 		elif word in nemours:
 			if l[i-2] == 'duc':
-				l[i] == 'ducdenemours'
+				l[i] = 'ducdenemours'
 			elif l[i-2] == 'monsieur':
-				l[i] == 'ducdenemours'
+				l[i] = 'ducdenemours'
 			l[i-2] = 'TO-DELETE'
 			l[i-1] = 'TO-DELETE'
 
@@ -93,15 +93,24 @@ def parseText(l):
 
 def avgDistance(l, chars):
 	npl = np.asarray(l)
+
 	princesse = np.where(npl == 'princessedecleves')[0]
+
+	#print 'PRINCESSE', princesse
+
 	charDists = {}
 	for char in chars:
-		dists = np.where(npl == char)[0]
+
+		dists = np.append(np.where(npl == char)[0], np.where(npl == char+',')[0])
+		np.append(dists, np.where(npl == char+'.')[0])
+
 		charDists[char] = dists
 
 
 	avgs = {}
 	for char in charDists:
+		#print 'CHAR', charDists[char]
+		#break
 		avg = 0
 		denom = 1
 		for elt in charDists[char]:
@@ -109,6 +118,7 @@ def avgDistance(l, chars):
 				if princesse[i]>elt:
 					avg += (princesse[i]-elt)
 					denom += 1
+					break
 
 		avgs[char] = float(avg)/denom
 
@@ -133,16 +143,17 @@ def avgDistance(l, chars):
 
 
 
-characters = ['dauphine', 'marie-stuart', 'd\'Ecosse', 'mademoiselledechartres', 'princessedecleves',
+characters = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecleves',
 'monsieurdecleves', 'princedecleves', 'madamedechartres', 'vidamedechartres', 'cour', 'valentinois',
-'poitiers', 'marguerite', 'henri', 'roi', 'nemours', 'medicis', 'reine', 
+'poitiers', 'marguerite', 'henri', 'roi', 'nemours', 'reine', 
 'lorraine', 'sancerre', 'chevalierdeguise', 'valet', 'chatelart', 'duchessedemercoeur',
 'marechal', 'ferrare', 'monsieurdeguise', 'd\'orange','montgomery',
-'monsieurdemontmorency', 'chirurgien', 'connetabledemontmorency', 'espagnols', 'gentilhomme', 'ecuyer', 
-'madamedemartigues', 'soie', 'dampierre', 'elizabeth', 'nevers', 'd\'anville', 
+ 'chirurgiens', 'connetable', 'espagnols', 'gentilhomme', 'ecuyer', 
+'martigues', 'soie', 'dampierre', 'elisabeth', 'nevers', 'd\'anville', 
 'lignerolles', 'dauphin', 'francois', 'conde', 'tournon', 'estouteville', 
 'madamedemercoeur', 'navarre']
 
 #print textToList('novel.txt')
 a= parseText(textToList('novel.txt'))
+#print a
 print avgDistance(a, characters)
