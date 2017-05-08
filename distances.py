@@ -139,39 +139,46 @@ def charAvgDistance(l, chars):
 		np.append(dists, np.where(npl == char+'.')[0])
 		charDists[char] = np.sort(dists)
 
-
+	mentionAvg = []
 	avgs = {}
 	for char in charDists:
-		next = []
+		
 		print 'CHAR IS', char
+		#print 'ELT LENGTH', len(charDists[char])
 		avg = 0
 		denom = 1
-		for elt in charDists[char]: #for each index of a mention of this character
-			for char2 in charDists: 
-				
+		for elt in charDists[char]: #for every mention of the king
+			
+			next = []
+
+			for char2 in charDists: #iterate through all other characters
+
 				if char != char2: 
 
-					for elt2 in charDists[char2]:
+					for elt2 in charDists[char2]: #for each of their mentions
 
-						if elt2 > elt:
-							
-							next.append((char2,elt2-elt))
+						#next_keys = [x[0] for x in next]
+						
+						if elt2 > elt: #see if mentioned after, append distance
+							next.append((char2,elt2-elt)) 
+							#print len(next)
+
 							break
 
-			print 'NEXTS', next
+			if len(next) > 0: 
+				so = sorted(next, key =lambda x:x[1])
+				#print len(next)
+				mentionAvg.append(so[0][1])
+				#print 'INTERMEDIATE', len(mentionAvg)
+			
+
+			
+
+		print 'MENTIONAVG LEN', len(mentionAvg)
+		avgs[char] = float(sum(mentionAvg))/len(mentionAvg)
+
 							
-		if len(next) != 0: 
-			avgs[char] = float(sum(x[1] for x in next))/len(next)
-		else: 
-			avgs[char] = 0.0
-		
-		
-		
-
-
 					
-
-
 	return avgs
 
 
