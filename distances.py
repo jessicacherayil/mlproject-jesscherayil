@@ -110,6 +110,8 @@ def parseText(l):
 
 	return new_l
 
+
+
 def search(regex,text):
     """Find all matches of regex in the provided text"""
     regexp = re.compile(regex)
@@ -121,7 +123,7 @@ def search(regex,text):
 def eachPageText(text,l):
 	pageDict = {} #make dict where key is page number, value is text split into words 
 	page_nums = search(r'(<[0-9]+>)',text.strip()) #use regex to find all page numbers in text
-	
+
 	for page_num in page_nums: 
 		pageDict[int(page_num[1:-1])] = '' #convert page num from str '<###>' format to int ### format
 
@@ -140,24 +142,36 @@ def eachPageText(text,l):
 	return pageDict
 
 def mentionsPerPage(pageDict, chars):
+
+
 	result = {}
-	charCounts = {}
+
+	
 	for page in pageDict: 
+		charCounts = {}
 		for char in chars: 
+
 			eachPage = np.asarray(pageDict[page])
+
 			numMentions = len(np.where(eachPage == char)[0])
+			
 			charCounts[char] = numMentions
+
 		result[page] = charCounts
 
+
 	return result
+
 
 def avgMentionsPerPage(mentionDict, chars):
 	avgMention = {}
 	for char in chars:
 		allSum = 0
 		for page in mentionDict:
-			allSum += mentionDict[page][char] 
-		print char, allSum
+			if mentionDict[page][char] != 0:
+
+				allSum += mentionDict[page][char] 
+
 		avgMention[char] = float(allSum)/len(mentionDict.keys())
 	return avgMention
 
@@ -322,13 +336,25 @@ characters = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecle
 'lignerolles', 'dauphin', 'francois', 'conde', 'tournon', 'estouteville', 
 'madamedemercoeur', 'navarre']
 
+characters2 = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecleves', 'madamedecleves',
+'monsieurdecleves', 'princedecleves', 'madamedechartres', 'vidamedechartres', 'cour', 'valentinois',
+'poitiers', 'marguerite', 'henri', 'roi', 'ducdenemours', 'monsieurdenemours', 'reine', 
+'lorraine', 'sancerre', 'chevalierdeguise', 'valet', 'chatelart', 'duchessedemercoeur',
+'marechal', 'ferrare', 'monsieurdeguise', 'd\'orange','montgomery',
+ 'chirurgiens', 'connetable', 'espagnols', 'gentilhomme', 'ecuyer', 
+'martigues', 'soie', 'dampierre', 'elisabeth', 'nevers', 'd\'anville', 
+'lignerolles', 'dauphin', 'francois', 'conde', 'tournon', 'estouteville', 
+'madamedemercoeur', 'navarre']
+
+
 #print textToList('novel.txt')
 jt = justText('novel.txt')
 a= parseText(textToList('novel.txt'))
 eachPage = eachPageText(jt, a)
-mentionDict= mentionsPerPage(eachPage, characters)
+mentionDict= mentionsPerPage(eachPage, characters2)
 
-print avgMentionsPerPage(mentionDict, characters)
+
+print avgMentionsPerPage(mentionDict, characters2)
 
 #print a
 #charAvgDistance(a, characters)
