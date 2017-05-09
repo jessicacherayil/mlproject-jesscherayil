@@ -20,6 +20,10 @@ def textToList(filename):
 	txtList = [word.lower() for word in textList]
 	return txtList
 
+def justText(filename):
+	text = remove_accents(codecs.open(filename, 'r','utf8').read())
+	return text
+
 def parseText(l):
 
 
@@ -39,25 +43,39 @@ def parseText(l):
 
 			if l[i-2] == 'monsieur':
 				l[i] = 'monsieurdecleves'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
 			elif l[i-2] == 'prince':
 				l[i] = 'monsieurdecleves'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
 			elif l[i-2] == 'princesse':
-				l[i] = 'princessedecleves'
+				l[i] = 'princessedecleves'					
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
+
 			elif l[i-2] == 'madame':
 				l[i] = 'princessedecleves'
-			l[i-2] = 'TO-DELETE'
-			l[i-1] = 'TO-DELETE'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
+
 
 
 		elif word in chartres:
 			if l[i-2] == 'mademoiselle':
 				l[i] = 'princessedecleves'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
 			elif l[i-2] == 'madame':
 				l[i] = 'madamedechartres'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
 			elif l[i-2] == 'vidame':
 				l[i] = 'vidamedechartres'
-			l[i-2] = 'TO-DELETE'
-			l[i-1] = 'TO-DELETE'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
+
+			
 
 
 		elif word in mercoeur:
@@ -80,14 +98,71 @@ def parseText(l):
 		elif word in nemours:
 			if l[i-2] == 'duc':
 				l[i] = 'ducdenemours'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
 			elif l[i-2] == 'monsieur':
 				l[i] = 'ducdenemours'
-			l[i-2] = 'TO-DELETE'
-			l[i-1] = 'TO-DELETE'
+				l[i-2] = 'TO-DELETE'
+				l[i-1] = 'TO-DELETE'
+
 
 	new_l = [x for x in l if x != 'TO-DELETE']
 
 	return new_l
+
+def search(regex,text):
+    """Find all matches of regex in the provided text"""
+    regexp = re.compile(regex)
+    results = set()
+    for phrase in regexp.findall(text):
+        results.add(phrase)
+    return results
+
+def eachPageText(text,l):
+	pageDict = {} #make dict where key is page number, value is text split into words 
+	page_nums = search(r'(<[0-9]+>)',text.strip()) #use regex to find all page numbers in text
+	
+	for page_num in page_nums: 
+		pageDict[int(page_num[1:-1])] = '' #convert page num from str '<###>' format to int ### format
+
+	sortedNums = sorted(pageDict.keys())
+
+	for page_num in range(len(sortedNums)):
+
+		start = l.index('<' +str(sortedNums[page_num]) + '>')
+		if page_num != 176:
+			end = l.index('<' + str(sortedNums[page_num + 1]) + '>')
+		else:
+			end = len(l)-24
+
+		pageDict[sortedNums[page_num]] = l[start+1:end]
+
+	return pageDict
+
+def mentionsPerPage(pageDict, chars):
+	result = {}
+	charCounts = {}
+	for page in pageDict: 
+		for char in chars: 
+			eachPage = np.asarray(pageDict[page])
+			numMentions = len(np.where(eachPage == char)[0])
+			charCounts[char] = numMentions
+		result[page] = charCounts
+
+	return result
+
+def avgMentionsPerPage(mentionDict, chars):
+	avgMention = {}
+	for char in chars:
+		allSum = 0
+		for page in mentionDict:
+			allSum += mentionDict[page][char] 
+		print char, allSum
+		avgMention[char] = float(allSum)/len(mentionDict.keys())
+	return avgMention
+
+
+
 
 def avgDistance(l, chars):
 	'''given the text and a list of characters, 
@@ -248,8 +323,14 @@ characters = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecle
 'madamedemercoeur', 'navarre']
 
 #print textToList('novel.txt')
+jt = justText('novel.txt')
 a= parseText(textToList('novel.txt'))
+eachPage = eachPageText(jt, a)
+mentionDict= mentionsPerPage(eachPage, characters)
+
+print avgMentionsPerPage(mentionDict, characters)
+
 #print a
 #charAvgDistance(a, characters)
 
-print findVocab(a, characters, vocabulary)
+#print findVocab(a, characters, vocabulary)
