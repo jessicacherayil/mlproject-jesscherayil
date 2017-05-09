@@ -6,6 +6,7 @@ import os
 import unicodedata
 import csv
 import numpy as np
+import json
 
 def remove_accents(input_str):
 	"""Given string input, returns the same string with no accents"""
@@ -230,7 +231,7 @@ def charAvgDistance(l, chars):
 	avgs = {}
 	for char in charDists:
 		
-		print 'CHAR IS', char
+		#print 'CHAR IS', char
 		#print 'ELT LENGTH', len(charDists[char])
 		avg = 0
 		denom = 1
@@ -258,7 +259,7 @@ def charAvgDistance(l, chars):
 
 			
 
-		print 'MENTIONAVG LEN', len(mentionAvg)
+		#print 'MENTIONAVG LEN', len(mentionAvg)
 		avgs[char] = float(sum(mentionAvg))/len(mentionAvg)
 
 							
@@ -309,8 +310,35 @@ def findVocab(l, chars,vocab):
 	return result
 
 				
-def saveToJSON():
-	pass
+def saveToJSON(characters, avgDict, pdist, cdist):
+	vecList = []
+	women = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecleves', 'madamedecleves',
+	'madamedechartres', 'vidamedechartres','valentinois',
+	'poitiers', 'marguerite', 'reine', 'duchessedemercoeur', 
+	'martigues', 'dampierre', 'elisabeth','tournon', 'estouteville', 
+	'madamedemercoeur']
+	for char in characters:
+		vec = {}
+		vec['avg-per-page'] = avgDict[char]
+		vec['pdist'] = pdist[char]
+		vec['cdist'] = cdist[char]
+		vec['target'] = int(char in women)
+		vecList.append((char,vec))
+	print 'length', len(vecList)
+	return vecList
+
+def printNice(vecList,filename, start, end):
+
+	f = open(filename, 'w')
+
+	for vec in vecList[start:end]:
+
+		stuff = json.dumps(vec[1]) 
+		f.write(json.dumps(vec[0]))
+		f.write(str(stuff))
+		f.write('\n')
+
+	
 
 	
 
@@ -352,9 +380,14 @@ jt = justText('novel.txt')
 a= parseText(textToList('novel.txt'))
 eachPage = eachPageText(jt, a)
 mentionDict= mentionsPerPage(eachPage, characters2)
+pDist = avgDistance(a, characters2)
+cDist = charAvgDistance(a, characters2)
 
-
-print avgMentionsPerPage(mentionDict, characters2)
+avgDict= avgMentionsPerPage(mentionDict, characters2)
+j = saveToJSON(characters2, avgDict, pDist, cDist)
+printNice(j, 'training.json', 0, 35)
+printNice(j, 'development.json', 35, 40)
+printNice(j, 'testing.json', 40, 48)
 
 #print a
 #charAvgDistance(a, characters)

@@ -175,9 +175,9 @@ def perceptron_gridsearch(trainX, trainy, devX, devy, maxiter_values):
     return hyperparamdict
 
 def main(plr):
-    trainX, trainy, featuremap = load_training('../data/training.json')
-    devX, devy = load_testing('../data/development.json', featuremap)
-    testX, testy = load_testing('../data/testing.json', featuremap)
+    trainX, trainy, featuremap = load_training('training.json')
+    devX, devy = load_testing('development.json', featuremap)
+    testX, testy = load_testing('testing.json', featuremap)
     featurelist = map(lambda x:x[0], sorted(featuremap.items(), key=lambda x:x[1])) # from index to feature
     print 'Loaded data'
 
