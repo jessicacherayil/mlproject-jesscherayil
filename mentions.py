@@ -322,74 +322,7 @@ def findVocab(search,vocabulary,pageDict):
 
     return result
 
-def avgNumWords(search, pageDict):
-    '''given a search space, and a dictionary mapping page number
-    to the text on each page, find the average number of words 
-    between two characters'''
-    d = {}
-   # print search.items()
-    for k,v in search.items():
-        char1 = k[0]
-        char2 = k[1]
-        page = v[0]
-        space = v[1]
-        start = space[0]
-        end = space[1]
 
-        commaText = ','.join(pageDict[page]).lower()
-        noSpacesText = ''.join(pageDict[page]).lower()
-
-        i1 = noSpacesText.index(char1)
-        i2 = noSpacesText.index(char2)
-
-        #print commaText[i1:i2]
-        l = commaText.split(',')
-        d[(char1, char2)] = len(l)
-    return d
-
-def avgNumWordsChar(chars,distance_dict):
-    '''given a dictionary mapping two characters to the average 
-    number of words in between their mention and another character's mention,
-    calculate the avg num words between each character and any other character, and 
-    return in a dictionary'''
-    result = {}
-    for char in chars: 
-        for d in distance_dict.keys():
-            if d[0] == char:
-                if char not in result: 
-                    result[char] = [distance_dict[d]]
-                else:
-                    result[char].append(distance_dict[d])
-
-    for elt in result:
-        denom = len(result[elt])
-        num = sum(result[elt])
-        result[elt] = float(num)/float(denom)
-
-    return result
-
-def avgNumWordsPrin(chars,distance_dict):
-    '''given a dictionary mapping two characters to the average 
-    number of words in between their mention and another character's mention,
-    calculate the avg num words between each character and any other character, and 
-    return in a dictionary'''
-
-    result = {}
-    for char in chars: 
-        for d in distance_dict.keys():
-            if d[0] == char and d[1] == 'madamedecleves':
-                
-                if char not in result: 
-                    result[char] = [distance_dict[d]]
-                else:
-                    result[char].append(distance_dict[d])
-
-    for elt in result:
-        denom = len(result[elt])
-        num = sum(result[elt])
-        result[elt] = float(num)/float(denom)
-
-    return result
 
         
 def avgNumMentionsPerPage(characters):

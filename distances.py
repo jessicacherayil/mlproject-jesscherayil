@@ -1,5 +1,3 @@
-
-
 '''Author: Jess Cherayil'''
 
 import re
@@ -157,19 +155,16 @@ def charAvgDistance(l, chars):
 
 					for elt2 in charDists[char2]: #for each of their mentions
 
-						#next_keys = [x[0] for x in next]
 						
 						if elt2 > elt: #see if mentioned after, append distance
 							next.append((char2,elt2-elt)) 
-							#print len(next)
+
 
 							break
 
 			if len(next) > 0: 
 				so = sorted(next, key =lambda x:x[1])
-				#print len(next)
 				mentionAvg.append(so[0][1])
-				#print 'INTERMEDIATE', len(mentionAvg)
 			
 
 			
@@ -181,8 +176,54 @@ def charAvgDistance(l, chars):
 					
 	return avgs
 
+def tfidf_scores(l, characters):
+	'''given the text and a list of characters, find their top 10 most commonly
+	used words and give tfidf_scores for each character'''
 
+	pass
 
+def findVocab(l, chars,vocab):
+	'''return the type of interaction (given by the vocab) between two characters. 
+	format: d[char1, char2] = interaction'''
+	npl = np.asarray(l)
+	result = {}
+	charDists = {}
+	for char in chars: #create dictionary of indices of character mention in text
+		dists = np.append(np.where(npl == char)[0], np.where(npl == char+',')[0])
+		np.append(dists, np.where(npl == char+'.')[0])
+		charDists[char] = np.sort(dists) 
+
+	for char in charDists:
+		print 'CHECKING FOR', char
+		for elt in charDists[char]: #for every mention of the king
+			next = []
+			for char2 in charDists: #iterate through all other characters
+
+				if char != char2: 
+
+					for elt2 in charDists[char2]: #for each of their mentions
+
+						if elt2 > elt: #see if mentioned after, append distance
+							next.append((char2,elt2,elt)) 
+							break
+			if len(next) > 0: 
+
+				so = sorted(next, key =lambda x:x[2]-x[1])
+				minVal = so[0]
+				for vword in vocab:
+					if vword in l[minVal[2]:minVal[1]]:
+						if (char, minVal[0]) not in result.keys():
+							result[(char,minVal[0])] = [vword]
+						else:
+							result[(char,minVal[0])].append(vword)
+
+	return result
+
+				
+def saveToJSON():
+	pass
+
+	
 
 # characters = ['Dauphine', 'Marie-Stuart', 'd\'Ecosse', 
 #  'La cour', 'Duchesse de Valentinois',
@@ -194,7 +235,7 @@ def charAvgDistance(l, chars):
 # 'Lignerolles', 'Monsieur le Dauphin', 'Francois II', 'Prince de Conde', 'Madame de Tournon', 'Estouteville', 
 #  'Roi de Navarre']
 
-
+vocabulary = ['dit', 'regardait', 'voyait', 'ajout', 'revele', 'montre', 'vint', 'vu', 'rougit', 'dansait', 'donne', 'donnait', 'vol']
 
 characters = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecleves',
 'monsieurdecleves', 'princedecleves', 'madamedechartres', 'vidamedechartres', 'cour', 'valentinois',
@@ -209,4 +250,6 @@ characters = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecle
 #print textToList('novel.txt')
 a= parseText(textToList('novel.txt'))
 #print a
-print charAvgDistance(a, characters)
+#charAvgDistance(a, characters)
+
+print findVocab(a, characters, vocabulary)
