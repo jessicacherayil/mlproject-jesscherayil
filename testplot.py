@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-import mpld3
-from mpld3 import plugins
+#import pandas as pd
+##import mpld3
+#from mpld3 import plugins
 from mentions import *
 
 # Define some CSS to control our custom labels

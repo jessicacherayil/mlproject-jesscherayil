@@ -114,12 +114,12 @@ def parseText(l):
 
 
 def search(regex,text):
-    """Find all matches of regex in the provided text"""
-    regexp = re.compile(regex)
-    results = set()
-    for phrase in regexp.findall(text):
-        results.add(phrase)
-    return results
+	"""Find all matches of regex in the provided text"""
+	regexp = re.compile(regex)
+	results = set()
+	for phrase in regexp.findall(text):
+		results.add(phrase)
+	return results
 
 def eachPageText(text,l):
 	pageDict = {} #make dict where key is page number, value is text split into words 
@@ -257,12 +257,7 @@ def charAvgDistance(l, chars):
 				mentionAvg.append(so[0][1])
 			
 
-			
-
-		#print 'MENTIONAVG LEN', len(mentionAvg)
-		avgs[char] = float(sum(mentionAvg))/len(mentionAvg)
-
-							
+		avgs[char] = float(sum(mentionAvg))/len(mentionAvg)				
 					
 	return avgs
 
@@ -284,7 +279,7 @@ def findVocab(l, chars,vocab):
 		charDists[char] = np.sort(dists) 
 
 	for char in charDists:
-		print 'CHECKING FOR', char
+
 		for elt in charDists[char]: #for every mention of the king
 			next = []
 			for char2 in charDists: #iterate through all other characters
@@ -302,12 +297,28 @@ def findVocab(l, chars,vocab):
 				minVal = so[0]
 				for vword in vocab:
 					if vword in l[minVal[2]:minVal[1]]:
-						if (char, minVal[0]) not in result.keys():
+						if (char,minVal[0]) not in result:
+
 							result[(char,minVal[0])] = [vword]
 						else:
-							result[(char,minVal[0])].append(vword)
+							if vword not in result[(char,minVal[0])]:
+								result[(char,minVal[0])].append(vword)
+							
 
 	return result
+
+def writeInteractions(intDict, filename):
+	with open(filename, 'wb') as csvfile:
+		writer = csv.writer(csvfile)
+		writer.writerow(['Initiator', 'Recipient','Type'])
+		
+		for elt in intDict:
+			if len(intDict[elt])>1:
+				for exch in intDict[elt]:
+					writer.writerow([elt[0], elt[1], exch])
+			else:
+				writer.writerow([elt[0], elt[1], intDict[elt][0]])
+
 
 				
 def saveToJSON(characters, avgDict, pdist, cdist):
@@ -317,12 +328,15 @@ def saveToJSON(characters, avgDict, pdist, cdist):
 	'poitiers', 'marguerite', 'reine', 'duchessedemercoeur', 
 	'martigues', 'dampierre', 'elisabeth','tournon', 'estouteville', 
 	'madamedemercoeur']
+
+	test = ['lignerolles', 'dauphin', 'francois', 'conde', 'tournon', 'estouteville', 'madamedemercoeur', 'navarre']
 	for char in characters:
 		vec = {}
 		vec['avg-per-page'] = avgDict[char]
 		vec['pdist'] = pdist[char]
 		vec['cdist'] = cdist[char]
-		vec['target'] = int(char in women)
+		if char not in test: 
+			vec['target'] = int(char in women)
 		vecList.append((char,vec))
 	print 'length', len(vecList)
 	return vecList
@@ -337,6 +351,7 @@ def printNice(vecList,filename, start, end):
 		f.write(json.dumps(vec[0]))
 		f.write(str(stuff))
 		f.write('\n')
+
 
 	
 
@@ -378,18 +393,19 @@ characters2 = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecl
 #print textToList('novel.txt')
 jt = justText('novel.txt')
 a= parseText(textToList('novel.txt'))
-eachPage = eachPageText(jt, a)
-mentionDict= mentionsPerPage(eachPage, characters2)
-pDist = avgDistance(a, characters2)
-cDist = charAvgDistance(a, characters2)
+# eachPage = eachPageText(jt, a)
+# mentionDict= mentionsPerPage(eachPage, characters2)
+# pDist = avgDistance(a, characters2)
+# cDist = charAvgDistance(a, characters2)
 
-avgDict= avgMentionsPerPage(mentionDict, characters2)
-j = saveToJSON(characters2, avgDict, pDist, cDist)
-printNice(j, 'training.json', 0, 35)
-printNice(j, 'development.json', 35, 40)
-printNice(j, 'testing.json', 40, 48)
+# avgDict= avgMentionsPerPage(mentionDict, characters2)
+# j = saveToJSON(characters2, avgDict, pDist, cDist)
+# printNice(j, 'training.json', 0, 35)
+# printNice(j, 'development.json', 35, 40)
+# printNice(j, 'testing.json', 40, 48)
 
 #print a
 #charAvgDistance(a, characters)
 
-#print findVocab(a, characters, vocabulary)
+r=findVocab(a, characters2, vocabulary)
+writeInteractions(r, 'output.csv')

@@ -199,6 +199,8 @@ def main(plr):
         print 'Testing with hyperplane that produced best mean squared acc on dev:', best_hyperparams
         lr_w, lr_b = lr_hyperparamdict[best_hyperparams]['hyperplane']
         lr_predictions = predict_confidence(lr_w, lr_b, testX)
+        print 'PREDICTIONS: ', lr_predictions
+        print 'test data', testx, testy
         print 'All-or-nothing accuracy:', get_accuracy(testy, lr_predictions)
         print 'Mean-squared accuracy:', get_meansq_accuracy(testy, lr_predictions)
 
