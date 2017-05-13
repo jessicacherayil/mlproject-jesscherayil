@@ -348,7 +348,7 @@ def printNice(vecList,filename, start, end):
 	for vec in vecList[start:end]:
 
 		stuff = json.dumps(vec[1]) 
-		f.write(json.dumps(vec[0]))
+		#f.write(json.dumps(vec[0]))
 		f.write(str(stuff))
 		f.write('\n')
 
@@ -393,19 +393,19 @@ characters2 = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecl
 #print textToList('novel.txt')
 jt = justText('novel.txt')
 a= parseText(textToList('novel.txt'))
-# eachPage = eachPageText(jt, a)
-# mentionDict= mentionsPerPage(eachPage, characters2)
-# pDist = avgDistance(a, characters2)
-# cDist = charAvgDistance(a, characters2)
+eachPage = eachPageText(jt, a)
+mentionDict= mentionsPerPage(eachPage, characters2)
+pDist = avgDistance(a, characters2)
+cDist = charAvgDistance(a, characters2)
 
-# avgDict= avgMentionsPerPage(mentionDict, characters2)
-# j = saveToJSON(characters2, avgDict, pDist, cDist)
-# printNice(j, 'training.json', 0, 35)
-# printNice(j, 'development.json', 35, 40)
-# printNice(j, 'testing.json', 40, 48)
+avgDict= avgMentionsPerPage(mentionDict, characters2)
+j = saveToJSON(characters2, avgDict, pDist, cDist)
+printNice(j, 'training.json', 0, 35)
+printNice(j, 'development.json', 35, 40)
+printNice(j, 'testing.json', 40, 48)
 
 #print a
 #charAvgDistance(a, characters)
 
-r=findVocab(a, characters2, vocabulary)
-writeInteractions(r, 'output.csv')
+#r=findVocab(a, characters2, vocabulary)
+#writeInteractions(r, 'output.csv')
