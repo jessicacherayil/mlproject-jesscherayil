@@ -188,7 +188,6 @@ def avgDistance(l, chars):
 
 	princesse = np.where(npl == 'princessedecleves')[0]
 
-	#print 'PRINCESSE', princesse
 
 	charDists = {}
 	for char in chars:
@@ -229,33 +228,32 @@ def charAvgDistance(l, chars):
 
 	mentionAvg = []
 	avgs = {}
+
 	for char in charDists:
-		
-		#print 'CHAR IS', char
-		#print 'ELT LENGTH', len(charDists[char])
 		avg = 0
 		denom = 1
+		count=0
 		for elt in charDists[char]: #for every mention of the king
+
 			
 			next = []
-
+			
 			for char2 in charDists: #iterate through all other characters
-
+				
 				if char != char2: 
 
 					for elt2 in charDists[char2]: #for each of their mentions
 
-						
 						if elt2 > elt: #see if mentioned after, append distance
 							next.append((char2,elt2-elt)) 
-
-
 							break
 
 			if len(next) > 0: 
 				so = sorted(next, key =lambda x:x[1])
 				mentionAvg.append(so[0][1])
-			
+
+
+
 
 		avgs[char] = float(sum(mentionAvg))/len(mentionAvg)				
 					
@@ -279,30 +277,28 @@ def findVocab(l, chars,vocab):
 		charDists[char] = np.sort(dists) 
 
 	for char in charDists:
-
+		print '***',char,'***'*8
 		for elt in charDists[char]: #for every mention of the king
-			next = []
+			
 			for char2 in charDists: #iterate through all other characters
+				#print char2
 
 				if char != char2: 
-
 					for elt2 in charDists[char2]: #for each of their mentions
+						if elt2 - elt <200: #see if mentioned after, append distance
 
-						if elt2 > elt: #see if mentioned after, append distance
-							next.append((char2,elt2,elt)) 
-							break
-			if len(next) > 0: 
 
-				so = sorted(next, key =lambda x:x[2]-x[1])
-				minVal = so[0]
-				for vword in vocab:
-					if vword in l[minVal[2]:minVal[1]]:
-						if (char,minVal[0]) not in result:
+							for vword in vocab:
+								
+								if vword in l[elt:elt2]:
+									if (char,char2) not in result:
 
-							result[(char,minVal[0])] = [vword]
-						else:
-							if vword not in result[(char,minVal[0])]:
-								result[(char,minVal[0])].append(vword)
+										result[(char,char2)] = [vword]
+									else:
+										# if vword not in result[(char,char2)]:
+										result[(char,char2)].append(vword)
+
+							
 							
 
 	return result
@@ -310,7 +306,7 @@ def findVocab(l, chars,vocab):
 def writeInteractions(intDict, filename):
 	with open(filename, 'wb') as csvfile:
 		writer = csv.writer(csvfile)
-		writer.writerow(['Initiator', 'Recipient','Type'])
+		# writer.writerow(['Initiator', 'Recipient','Type'])
 		
 		for elt in intDict:
 			if len(intDict[elt])>1:
@@ -319,9 +315,90 @@ def writeInteractions(intDict, filename):
 			else:
 				writer.writerow([elt[0], elt[1], intDict[elt][0]])
 
+def dialogue(filename):
+	denom = {}
+	num = {}
+	result = {}
+	with open(filename, 'rb') as f:
+		reader = csv.reader(f)
 
+		for row in reader:
+			if row[0] not in denom:
+				denom[row[0]] = 1.
+
+			else:
+				denom[row[0]]+= 1
+
+	with open(filename, 'rb') as f2: 
+		reader2 = csv.reader(f2)
+		for row in reader2: 
+			if row[0] not in num:
+				if row[2] == 'dit':
+					num[row[0]] = 1.
+				else:
+					num[row[0]] = 0.
+			else:
+				if row[2] == 'dit':
+					num[row[0]]+= 1
+
+	for char in num:
+		result[char] = num[char]/denom[char]
+
+
+	return result
+
+def princesseInt(filename):
+	denom = {}
+	num = {}
+	result = {}
+	with open(filename, 'rb') as f:
+		reader = csv.reader(f)
+
+		for row in reader:
+			if row[0] not in denom:
+				denom[row[0]] = 1.
+
+			else:
+				denom[row[0]]+= 1
+
+	with open(filename, 'rb') as f2: 
+		reader2 = csv.reader(f2)
+		for row in reader2: 
+			if row[0] not in num:
+				if row[1] == 'princessedecleves':
+					num[row[0]] = 1.
+				else:
+					num[row[0]] = 0.
+			else:
+				if row[1] == 'princessedecleves':
+					num[row[0]]+= 1
+
+	for char in num:
+		result[char] = num[char]/denom[char]
+
+
+	return result
+
+def royaltyInt(filename):
+
+	result = {}
+	with open(filename, 'rb') as f:
+		reader = csv.reader(f)
+
+		for row in reader:
+			if row[0] not in result:
+				if row[1] == 'roi' or row[1] == 'reine' or row[1] == 'dauphine':
+					result[row[0]] = 1.
+				else:
+					result[row[0]] = 0.
+
+			else:
+				if row[1] == 'roi' or row[1] == 'reine' or row[1] == 'dauphine':
+					result[row[0]]+= 1
+
+	return result
 				
-def saveToJSON(characters, avgDict, pdist, cdist):
+def saveToJSON(characters, avgDict, pdist, cdist, dialogue, pRaw, royalty):
 	vecList = []
 	women = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecleves', 'madamedecleves',
 	'madamedechartres', 'vidamedechartres','valentinois',
@@ -335,13 +412,17 @@ def saveToJSON(characters, avgDict, pdist, cdist):
 		vec['avg-per-page'] = avgDict[char]
 		vec['pdist'] = pdist[char]
 		vec['cdist'] = cdist[char]
+		if char in dialogue and char in pRaw and char in royalty:
+				vec['dialogue'] = dialogue[char]
+				vec['pRaw'] = pRaw[char]
+				vec['royalty'] = royalty[char]
 		if char not in test: 
 			vec['target'] = int(char in women)
 		vecList.append((char,vec))
 	print 'length', len(vecList)
 	return vecList
 
-def printNice(vecList,filename, start, end):
+def makeFiles(vecList,filename, start, end):
 
 	f = open(filename, 'w')
 
@@ -397,15 +478,18 @@ eachPage = eachPageText(jt, a)
 mentionDict= mentionsPerPage(eachPage, characters2)
 pDist = avgDistance(a, characters2)
 cDist = charAvgDistance(a, characters2)
+r=findVocab(a, characters2, vocabulary)
+writeInteractions(r, 'output.csv')
+dialogue=dialogue('output.csv')
+pRaw = princesseInt('output.csv')
+royalty = royaltyInt('output.csv')
 
 avgDict= avgMentionsPerPage(mentionDict, characters2)
-j = saveToJSON(characters2, avgDict, pDist, cDist)
-printNice(j, 'training.json', 0, 35)
-printNice(j, 'development.json', 35, 40)
-printNice(j, 'testing.json', 40, 48)
+j = saveToJSON(characters2, avgDict, pDist, cDist, dialogue, pRaw, royalty)
+makeFiles(j, 'training.json', 0, 35)
+makeFiles(j, 'development.json', 35, 40)
+makeFiles(j, 'testing.json', 40, 48)
 
 #print a
 #charAvgDistance(a, characters)
 
-#r=findVocab(a, characters2, vocabulary)
-#writeInteractions(r, 'output.csv')

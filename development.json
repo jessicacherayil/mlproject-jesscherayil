@@ -1,5 +1,5 @@
-{"avg-per-page": 0.005649717514124294, "target": 0, "pdist": 61.5, "cdist": 125.0}
-{"avg-per-page": 0.0, "target": 1, "pdist": 12.0, "cdist": 38.43472906403941}
-{"avg-per-page": 0.01694915254237288, "target": 1, "pdist": 621.6666666666666, "cdist": 31.288888888888888}
-{"avg-per-page": 0.03389830508474576, "target": 0, "pdist": 421.8, "cdist": 38.47102342786683}
-{"avg-per-page": 0.062146892655367235, "target": 0, "pdist": 518.0, "cdist": 43.68803176403857}
+{"avg-per-page": 0.005649717514124294, "target": 0, "pRaw": 0.2, "dialogue": 0.5, "royalty": 0.0, "pdist": 61.5, "cdist": 125.0}
+{"avg-per-page": 0.0, "target": 1, "pRaw": 0.4444444444444444, "dialogue": 0.6666666666666666, "royalty": 0.0, "pdist": 12.0, "cdist": 38.43472906403941}
+{"avg-per-page": 0.01694915254237288, "target": 1, "pRaw": 0.1, "dialogue": 0.7, "royalty": 3.0, "pdist": 621.6666666666666, "cdist": 31.288888888888888}
+{"avg-per-page": 0.03389830508474576, "target": 0, "pRaw": 0.5, "dialogue": 0.75, "royalty": 0.0, "pdist": 421.8, "cdist": 38.47102342786683}
+{"avg-per-page": 0.062146892655367235, "target": 0, "pRaw": 0.06153846153846154, "dialogue": 0.38461538461538464, "royalty": 33.0, "pdist": 518.0, "cdist": 43.68803176403857}
