@@ -12,3 +12,7 @@ initiator of the interaction, the second column is the recipient of the interact
 third column is a word describing the type of interaction that occurred. 
 - mentions.csv is a spreadsheet mapping characters to the number of times they were mentioned
 on each page in the novel. 
+
+Paper: 
+Read about my findings here: 
+https://docs.google.com/a/wellesley.edu/document/d/1R-ovZ4ykGa5wacDvZaX2yFlSMJLe3LBi2gl3E3xq0JA/edit?usp=sharing
