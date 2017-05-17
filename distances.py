@@ -111,6 +111,28 @@ def parseText(l):
 
 	return new_l
 
+def mapIndex(text, l):
+	'''create dictionary with {range(i1,i2): pagenum}'''
+	d = {} #make dict where key is page number, value is text split into words 
+	page_nums = search(r'(<[0-9]+>)',text.strip()) #use regex to find all page numbers in text
+
+
+	sortedNums = sorted(int(page[1:-1]) for page in page_nums)
+	#print sortedNums
+
+	for page_num in range(len(sortedNums)):
+
+		start = l.index(str('<' + str(sortedNums[page_num]) + '>'))
+		if page_num != 176:
+			end = l.index('<' + str(sortedNums[page_num + 1]) + '>')
+		else:
+			end = len(l)-24
+
+		d[(start+1,end)] = page_num+75
+
+	#print l[0:8296]
+	return sorted(d.items(),key=lambda x: x[1])
+
 
 
 def search(regex,text):
@@ -265,7 +287,7 @@ def tfidf_scores(l, characters):
 
 	pass
 
-def findVocab(l, chars,vocab):
+def findVocab(l, chars,vocab, mapIndex):
 	'''return the type of interaction (given by the vocab) between two characters. 
 	format: d[char1, char2] = interaction'''
 	npl = np.asarray(l)
@@ -291,17 +313,30 @@ def findVocab(l, chars,vocab):
 							for vword in vocab:
 								
 								if vword in l[elt:elt2]:
+
+									vword_i = l.index(vword)
+									page = findPageNum(vword_i, mapIndex)
+
 									if (char,char2) not in result:
 
-										result[(char,char2)] = [vword]
+										result[(char,char2)] = [(vword,page)]
 									else:
 										# if vword not in result[(char,char2)]:
-										result[(char,char2)].append(vword)
+										result[(char,char2)].append((vword,page))
 
 							
 							
 
 	return result
+
+def findPageNum(vword_i, mapIndex):
+	for k in mapIndex:
+		tup = k[0]
+		s = tup[0]
+		e = tup[1]
+		if vword_i in range(s,e):
+			return k[1]
+
 
 def writeInteractions(intDict, filename):
 	with open(filename, 'wb') as csvfile:
@@ -311,7 +346,7 @@ def writeInteractions(intDict, filename):
 		for elt in intDict:
 			if len(intDict[elt])>1:
 				for exch in intDict[elt]:
-					writer.writerow([elt[0], elt[1], exch])
+					writer.writerow([elt[0], elt[1], exch[0], exch[1] ])
 			else:
 				writer.writerow([elt[0], elt[1], intDict[elt][0]])
 
@@ -474,21 +509,23 @@ characters2 = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecl
 #print textToList('novel.txt')
 jt = justText('novel.txt')
 a= parseText(textToList('novel.txt'))
-eachPage = eachPageText(jt, a)
-mentionDict= mentionsPerPage(eachPage, characters2)
-pDist = avgDistance(a, characters2)
-cDist = charAvgDistance(a, characters2)
-r=findVocab(a, characters2, vocabulary)
+mapIndex= mapIndex(jt, a)
+# eachPage = eachPageText(jt, a)
+# mentionDict= mentionsPerPage(eachPage, characters2)
+# pDist = avgDistance(a, characters2)
+# cDist = charAvgDistance(a, characters2)
+r=findVocab(a, characters2, vocabulary, mapIndex)
+print r
 writeInteractions(r, 'output.csv')
-dialogue=dialogue('output.csv')
-pRaw = princesseInt('output.csv')
-royalty = royaltyInt('output.csv')
+# dialogue=dialogue('output.csv')
+# pRaw = princesseInt('output.csv')
+# royalty = royaltyInt('output.csv')
 
-avgDict= avgMentionsPerPage(mentionDict, characters2)
-j = saveToJSON(characters2, avgDict, pDist, cDist, dialogue, pRaw, royalty)
-makeFiles(j, 'training.json', 0, 35)
-makeFiles(j, 'development.json', 35, 40)
-makeFiles(j, 'testing.json', 40, 48)
+# avgDict= avgMentionsPerPage(mentionDict, characters2)
+# j = saveToJSON(characters2, avgDict, pDist, cDist, dialogue, pRaw, royalty)
+# makeFiles(j, 'training.json', 0, 35)
+# makeFiles(j, 'development.json', 35, 40)
+# makeFiles(j, 'testing.json', 40, 48)
 
 #print a
 #charAvgDistance(a, characters)
