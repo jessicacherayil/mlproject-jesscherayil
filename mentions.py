@@ -218,7 +218,7 @@ def getNumMentionsInRange(character, chunk):
     Output: list where list[0] is how many times the character
     is mentioned in the first chunk pages'''
     
-    charDict,iDict = characterFreq(pageDict, characters)
+    charDict,iDict,t = characterFreq(pageDict, characters)
     mentions = []
     
     for i in range(75,254, chunk):
@@ -310,7 +310,7 @@ characters3 = ['dauphine', 'd\'ecosse', 'mademoiselledechartres', 'princessedecl
 y = [1,1,1,1,1,0,0,1,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0]
 
 pageDict = eachPageText('novel.txt')
-print pageDict
+#print pageDict
 
 #d,i,t = characterFreq(pageDict, characters)
 #print avgNumMentionsPerPage(characters)
