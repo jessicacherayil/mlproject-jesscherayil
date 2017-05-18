@@ -16,9 +16,11 @@ from distances import *
 #pRaw -- number of interactions with the princess
 #royalty -- number of interactions with reine, roi
 
-def makeTrace(character, xLabels, avgDict):
-	
-	yVals = avgDict[character]
+def makeTrace(character, xLabels, d):
+	if character in d:
+		yVals = d[character]
+	else:
+		yVals = 0.0
 	randColor = 'rgb(' + str(random.randint(0,256)) + str(random.randint(0,256)) + str(random.randint(0,256)) + ')'
 	
 	trace0 = go.Bar(
@@ -37,32 +39,62 @@ def makeTrace(character, xLabels, avgDict):
 	
 	return trace0
 
-def makePlot(characters,avgDict):
+def makePlot(characters,feat):
+
+##########################################
+	jt = justText('novel.txt')
+	a= parseText(textToList('novel.txt'))
+	
+	eachPage = eachPageText(jt, a)
+	mentionDict= mentionsPerPage(eachPage, characters2)
+
+	if feat == 'avg_mentions':
+		d= avgMentionsPerPage(mentionDict, characters2)
+		bigTitle = 'Average Number of Mentions Per Page'
+
+	elif feat == 'distance_from_princesse':
+		d = avgDistance(a, characters)
+		bigTitle = 'Average Distance (in words) from Princesse'
+
+	elif feat == 'distance_from_char':
+		d = charAvgDistance(a, characters)
+		bigTitle = 'Average Distance (in words) from Any Character'
+
+	elif feat == 'dialogue':
+		d = dialogue('output.csv')
+		bigTitle = 'Proportion of Dialogue Interactions'
+
+	elif feat == 'pRaw':
+		d =princesseInt('output.csv')
+		bigTitle = 'Proportion of Interactions with Princesse'
+
+	elif feat == 'royalty':
+		d = royaltyInt('output.csv')
+		bigTitle = 'Proportion of Interactions with Royalty'
+
+#######################################
+
 	xLabels = characters
 	 
 	traces = []
 	for character in characters:
-		traces.append(makeTrace(character,xLabels,avgDict))
-	 
-	 
+		traces.append(makeTrace(character,xLabels,d))	 
 	data = traces
 
+#####################################################################	
 	layout = go.Layout(
-		title='Average Number of Mentions Per Page',
+		title=bigTitle,
 		xaxis = dict(
 			title = 'Character'
 			),
 		yaxis=dict(
-			title = 'Average Number of Mentions'
+			title = bigTitle
 			),
 	)
 	 
 	 
 	fig = go.Figure(data=data, layout=layout)
-	if len(characters)<10:
-		plot_url = py.plot(fig, filename='avg_mentions')
-	else:
-		plot_url = py.plot(fig, filename ='avg_mentions')
+	plot_url = py.plot(fig, filename =feat)
 	
 
 
@@ -77,17 +109,12 @@ def main():
 	'martigues', 'soie', 'dampierre', 'elisabeth', 'nevers', 'd\'anville', 
 	'lignerolles', 'dauphin', 'francois', 'conde', 'tournon', 'estouteville', 
 	'madamedemercoeur', 'navarre']
-	#parser = argparse.ArgumentParser(description='Create bar graph of mentions')
-	#parser.add_argument('chunk', type=int, help='ranges of page numbers')
-	#args = parser.parse_args()   
-	#makePlot(commonChars, args.chunk)
-	jt = justText('novel.txt')
-	a= parseText(textToList('novel.txt'))
+	parser = argparse.ArgumentParser()
+	parser.add_argument('feature', type=str, help='which feature to graph')
+	args = parser.parse_args()   
 	
-	eachPage = eachPageText(jt, a)
-	mentionDict= mentionsPerPage(eachPage, characters2)
-	avgDict= avgMentionsPerPage(mentionDict, characters2)
-	makePlot(characters2, avgDict)
+
+	makePlot(characters2, args.feature)
 	
 	
 if __name__=='__main__':
