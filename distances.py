@@ -130,7 +130,7 @@ def mapIndex(text, l):
 
 		d[(start+1,end)] = page_num+75
 
-	#print l[0:8296]
+	#print sorted(d.items(),key=lambda x: x[1])
 	return sorted(d.items(),key=lambda x: x[1])
 
 
@@ -307,14 +307,14 @@ def findVocab(l, chars,vocab, mapIndex):
 
 				if char != char2: 
 					for elt2 in charDists[char2]: #for each of their mentions
-						if elt2 - elt <200: #see if mentioned after, append distance
+						if elt2 - elt <100: #see if mentioned after, append distance
 
 
 							for vword in vocab:
-								
-								if vword in l[elt:elt2]:
+								sliced = l[elt:elt2]
+								if vword in sliced:
 
-									vword_i = l.index(vword)
+									vword_i = elt + sliced.index(vword)
 									page = findPageNum(vword_i, mapIndex)
 
 									if (char,char2) not in result:
@@ -334,6 +334,7 @@ def findPageNum(vword_i, mapIndex):
 		tup = k[0]
 		s = tup[0]
 		e = tup[1]
+
 		if vword_i in range(s,e):
 			return k[1]
 
@@ -341,14 +342,15 @@ def findPageNum(vword_i, mapIndex):
 def writeInteractions(intDict, filename):
 	with open(filename, 'wb') as csvfile:
 		writer = csv.writer(csvfile)
-		# writer.writerow(['Initiator', 'Recipient','Type'])
 		
 		for elt in intDict:
 			if len(intDict[elt])>1:
 				for exch in intDict[elt]:
-					writer.writerow([elt[0], elt[1], exch[0], exch[1] ])
+					
+					writer.writerow([elt[0], elt[1], exch[0], exch[1]])
 			else:
-				writer.writerow([elt[0], elt[1], intDict[elt][0]])
+
+				writer.writerow([elt[0], elt[1], intDict[elt][0][0], intDict[elt][0][1]])
 
 def dialogue(filename):
 	denom = {}
@@ -515,7 +517,7 @@ mapIndex= mapIndex(jt, a)
 # pDist = avgDistance(a, characters2)
 # cDist = charAvgDistance(a, characters2)
 r=findVocab(a, characters2, vocabulary, mapIndex)
-print r
+#print r
 writeInteractions(r, 'output.csv')
 # dialogue=dialogue('output.csv')
 # pRaw = princesseInt('output.csv')
